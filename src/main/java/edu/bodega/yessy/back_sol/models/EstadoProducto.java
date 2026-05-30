@@ -7,18 +7,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "estado_producto")
+@Table(name = "estadoproducto")
 public class EstadoProducto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idEstadoProducto;
+    private Integer idestadoProducto;
     private String nombre;
 
-    public Integer getIdEstadoProducto() {
-        return idEstadoProducto;
+    public Integer getIdestadoProducto() {
+        return idestadoProducto;
     }
-    public void setIdEstadoProducto(Integer idEstadoProducto) {
-        this.idEstadoProducto = idEstadoProducto;
+    public void setIdestadoProducto(Integer idestadoProducto) {
+        this.idestadoProducto = idestadoProducto;
     }
     public String getNombre() {
         return nombre;

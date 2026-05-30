@@ -7,18 +7,18 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "unidad_medida")
+@Table(name = "unidadmedida")
 public class UnidadMedida {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Integer idUnidadMedida;
+    private Integer idunidadMedida;
     private String nombre;
 
-    public Integer getIdUnidadMedida() {
-        return idUnidadMedida;
+    public Integer getIdunidadMedida() {
+        return idunidadMedida;
     }
-    public void setIdUnidadMedida(Integer idUnidadMedida) {
-        this.idUnidadMedida = idUnidadMedida;
+    public void setIdunidadMedida(Integer idunidadMedida) {
+        this.idunidadMedida = idunidadMedida;
     }
     public String getNombre() {
         return nombre;
