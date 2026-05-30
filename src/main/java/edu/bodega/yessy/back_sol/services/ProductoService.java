@@ -20,5 +20,4 @@ public class ProductoService {
     public Producto nuevo(Producto producto) {
         return productoRepository.save(producto);
     }
-
 }

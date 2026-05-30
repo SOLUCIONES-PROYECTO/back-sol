@@ -9,23 +9,23 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.bodega.yessy.back_sol.models.DetalleNea;
-import edu.bodega.yessy.back_sol.services.DetalleNeaService;
+import edu.bodega.yessy.back_sol.models.MetodoPago;
+import edu.bodega.yessy.back_sol.services.MetodoPagoService;
 
 @RestController
-@RequestMapping("/detalleneas")
-public class DetalleNeaController {
+@RequestMapping("/metodosdepago")
+public class MetodoDePagoController {
 
     @Autowired
-    DetalleNeaService detalleNeaService;
+    MetodoPagoService metodoPagoService;
 
     @GetMapping
-    public ArrayList<DetalleNea> listarDetalleNeas(){
-        return detalleNeaService.listar();
+    public ArrayList<MetodoPago> listarMetodoDePagos(){
+        return metodoPagoService.listar();
     }
 
     @PostMapping
-    public DetalleNea nuevoDetalleNea(@RequestBody DetalleNea detalleNea){
-        return detalleNeaService.nuevo(detalleNea);
+    public MetodoPago nuevoMetodoDePago(@RequestBody MetodoPago metodoDePago){
+        return metodoPagoService.nuevo(metodoDePago);
     }
 }
