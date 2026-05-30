@@ -3,9 +3,9 @@ package edu.bodega.yessy.back_sol.repositories;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import edu.bodega.yessy.back_sol.models.Areausointerno;
+import edu.bodega.yessy.back_sol.models.AreaUsoInterno;
 
 @Repository
-public interface AreaUsoInternoRepository extends JpaRepository<Areausointerno, Integer> {
+public interface AreaUsoInternoRepository extends JpaRepository<AreaUsoInterno, Integer> {
     
 }

@@ -7,8 +7,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "areausointerno")
-public class Areausointerno{
+@Table(name = "AreaUsoInterno")
+public class AreaUsoInterno{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idAreaUsoInterno;
