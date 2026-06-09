@@ -57,8 +57,8 @@ public class Cliente {
         return persona_Idpersona;
     }
 
-    public void setPersonaIdpersona(Integer persona_Idpersona) {
-        this.personaIdpersona = persona_Idpersona;
+    public void setPersona_Idpersona(Integer persona_Idpersona) {
+        this.persona_Idpersona = persona_Idpersona;
     }
 
     public String getCodigoCliente() {

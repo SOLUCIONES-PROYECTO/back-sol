@@ -15,53 +15,53 @@ public class Proveedor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idProveedor")
+    @Column(name = "`idproveedor`")
     private Integer idProveedor;
-    @Column(name = "persona_idpersona")
+    @Column(name = "`persona_idpersona`")
     private Integer persona_idpersona;
-    @Column
+    @Column (name = "`ruc`")
     private String RUC;
-    @Column
+    @Column (name = "`descripcion`")
     private String descripcion;
-    @Column
+    @Column (name = "`codigoUbigeo`")
     private String codigoUbigeo;
-    @Column
+    @Column (name = "`direccion`")
     private String direccion;
-    @Column
+    @Column (name = "`departamento`")
     private String departamento;
-    @Column
+    @Column (name = "`ciudad`")
     private String ciudad;
-    @Column
+    @Column (name = "`distrito`")
     private String distrito;
-    @Column
+    @Column (name = "`codigoPostal`")
     private String codigoPostal;
-    @Column
+    @Column (name = "`referenciaUbicacion`")
     private String referenciaUbicacion;
-    @Column
+    @Column (name = "`correoEmpresa`")
     private String correoEmpresa;
-    @Column
+    @Column (name = "`telefonoEmpresa`")
     private String telefonoEmpresa;
-    @Column
+    @Column (name = "`telefonofijoEmpresa`")
     private String telefonofijoEmpresa;
-    @Column
+    @Column (name = "`paginaWeb`")
     private String paginaWeb;
-    @Column
+    @Column (name = "`nombreSectorista`")
     private String nombreSectorista;
-    @Column
+    @Column (name = "`correoSectorista`")
     private String correoSectorista;
-    @Column
+    @Column (name = "`celularSectorista`")
     private String celularSectorista;
-    @Column
+    @Column (name = "`telefijoSectorista`")
     private String telefijoSectorista;
-    @Column
+    @Column (name = "`etiquetas`")
     private String etiquetas;
-    @Column
+    @Column (name = "`incidencias`")
     private String incidencias;
-    @Column
+    @Column (name = "`fechaRegistro`")
     private LocalDateTime fechaRegistro;
-    @Column
+    @Column (name = "`calificacion`")
     private String calificacion;
-    @Column
+    @Column (name = "`condicionesPago`")
     private String condicionesPago;
 
     public Integer getIdProveedor() {

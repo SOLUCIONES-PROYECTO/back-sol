@@ -18,34 +18,34 @@ public class DocEntrada {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer iddocentrada;
 
-    @Column(name = "tipodocentrada_idtipodocentrada")
+    @Column(name = "`tipodocentrada_idtipodocentrada`") 
     private Integer tipodocentrada_idtipodocentrada;
 
-    @Column(name = "metododepago_idmetododepago")
+    @Column(name = "`metododepago_idmetododepago`")
     private Integer metododepago_idmetododepago;
 
-    @Column(name = "estadoPago_idestadoPago")
+    @Column(name = "`estadoPago_idestadoPago`")
     private Integer estadoPago_idestadoPago;
 
-    @Column(name = "estadoIngreso_idestadoIngreso")
+    @Column(name = "`estadoIngreso_idestadoIngreso`")
     private Integer estadoIngreso_idestadoIngreso;
 
-    @Column(name = "empleado_idempleado")
+    @Column(name = "`empleado_idempleado`")
     private Integer empleado_idempleado;
 
-    @Column(name = "proveedor_idProveedor")
+    @Column(name = "`proveedor_idProveedor`")
     private Integer proveedor_idProveedor;
 
-    @Column
+    @Column(name = "`numeroDocumento`")
     private String numeroDocumento;
 
-    @Column
+    @Column(name = "`fecha_ingreso`")
     private Date fecha_ingreso;
 
-    @Column
+    @Column(name = "`incidencias`")
     private String incidencias;
 
-    @Column
+    @Column(name = "`precioTotal`")
     private BigDecimal precioTotal;
 
     public Integer getIddocentrada() {

@@ -19,31 +19,31 @@ public class DocSalida {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer iddocsalida;
 
-    @Column(name = "tipodocsalida_idtipodocsalida")
+    @Column(name = "`tipodocsalida_idtipodocsalida`")
     private Integer tipodocsalida_idtipodocsalida;
 
-    @Column(name = "cliente_idcliente")
+    @Column(name = "`cliente_idcliente`")
     private Integer cliente_idcliente;
 
-    @Column(name = "empleado_idempleado")
+    @Column(name = "`empleado_idempleado`")
     private Integer empleado_idempleado;
 
-    @Column
+    @Column(name = "`numeroDocumento`")
     private String numeroDocumento;
 
-    @Column
+    @Column (name = "`fechaRegistro`")
     private Timestamp fechaRegistro;
 
-    @Column
+    @Column(name = "`fechaEgreso`")
     private Date fechaEgreso;
 
-    @Column
+    @Column (name = "`descripcion`")
     private String descripcion;
 
-    @Column
+    @Column (name = "`totalSalida`")
     private BigDecimal totalSalida;
 
-    @Column(name = "metododepago_idmetododepago")
+    @Column(name = "`metododepago_idmetododepago`")
     private Integer metododepago_idmetododepago;
 
     public Integer getIddocsalida() {
