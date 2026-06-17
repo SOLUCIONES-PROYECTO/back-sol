@@ -11,10 +11,9 @@ import edu.bodega.yessy.back_sol.repositories.EmpleadoRepository;
 
 @Service
 public class EmpleadoService {
-
     private final EmpleadoRepository empleadoRepository;
 
-    public EmpleadoService(EmpleadoRepository empleadoRepository) {
+    public EmpleadoService(EmpleadoRepository empleadoRepository){
         this.empleadoRepository = empleadoRepository;
     }
 
