@@ -6,23 +6,15 @@ public class ProductoRequestDTO {
     private String nombre;
     private String descripcion;
     private String categoria;
-
     private Integer idProveedor;
-
     private BigDecimal precioCompra;
     private BigDecimal precioVenta;
-
     private Integer stockMinimo;
     private Integer stockActual;
-
     private Integer idEstado;
-
     private Integer idUnidadMedida;
-
     private String imagen;
-
     private BigDecimal margen;
-
     private BigDecimal ganancia;
 
     public String getNombre() {
