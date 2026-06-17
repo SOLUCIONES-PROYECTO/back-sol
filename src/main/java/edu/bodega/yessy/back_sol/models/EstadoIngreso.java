@@ -8,15 +8,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "estadoingreso")
+@Table(name = "estado_ingreso")
 public class EstadoIngreso {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idestadoIngreso")
     private Integer idestadoIngreso;
 
-    @Column
+    @Column (name = "nombre", nullable = false)
     private String nombre;
 
     public Integer getIdestadoIngreso() {

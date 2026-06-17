@@ -1,5 +1,6 @@
 package edu.bodega.yessy.back_sol.models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -7,11 +8,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "unidadmedida")
+@Table(name = "unidad_medida")
 public class UnidadMedida {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Integer idunidadMedida;
+
+    @Column (name = "nombre", nullable = false)
     private String nombre;
 
     public Integer getIdunidadMedida() {

@@ -8,14 +8,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "metododepago")
+@Table(name = "metodo_de_pago")
 public class MetodoPago {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idmetododepago")
     private Integer idmetododepago;
-    @Column
+
+    @Column (name = "nombre", nullable = false)
     private String nombre;
 
     public Integer getIdmetododepago() {

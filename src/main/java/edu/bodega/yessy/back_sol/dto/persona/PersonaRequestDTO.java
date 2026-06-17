@@ -1,71 +1,36 @@
-package edu.bodega.yessy.back_sol.models;
+package edu.bodega.yessy.back_sol.dto.persona;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+public class PersonaRequestDTO {
+    private Integer idPersona;
 
-@Entity
-@Table(name = "cliente")
-public class Cliente {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idcliente;
-
-    @ManyToOne
-    @JoinColumn(name = "id_persona", nullable = false)
-    private Persona persona;
-
-    @Column(name = "codigo_cliente", nullable = false)
     private String codigoCliente;
 
-    @Column(name = "fecha_registro", nullable = false)
     private LocalDateTime fechaRegistro;
 
-    @Column(name = "estado", nullable = false)
     private String estado;
 
-    @Column(name = "tipo_cliente", nullable = false)
     private String tipoCliente;
 
-    @Column(name = "limite_credito", nullable = false, precision = 10, scale = 2)
     private BigDecimal limiteCredito;
 
-    @Column(name = "observaciones")
     private String observaciones;
 
-    @Column(name = "categoria_cliente", nullable = false)
     private String categoriaCliente;
 
-    @Column(name = "fecha_ultima_compra", nullable = false)
     private LocalDate fechaUltimaCompra;
 
-    @Column(name = "frecuencia_compra", nullable = false)
     private String frecuenciaCompra;
 
-    public Integer getIdcliente() {
-        return idcliente;
+    public Integer getIdPersona() {
+        return idPersona;
     }
 
-    public void setIdcliente(Integer idcliente) {
-        this.idcliente = idcliente;
-    }
-
-    public Persona getPersona() {
-        return persona;
-    }
-
-    public void setPersona(Persona persona) {
-        this.persona = persona;
+    public void setIdPersona(Integer idPersona) {
+        this.idPersona = idPersona;
     }
 
     public String getCodigoCliente() {
@@ -140,6 +105,5 @@ public class Cliente {
         this.frecuenciaCompra = frecuenciaCompra;
     }
 
-    
     
 }

@@ -5,28 +5,31 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "detallenea")
+@Table(name = "detalle_nea")
 public class DetalleNea {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "iddetalleNea")
     private Integer iddetalleNea;
 
-    @Column(name = "motivo")
+    @Column(name = "motivo", nullable = false)
     private String motivo;
 
     @Column(name = "observaciones")
     private String observaciones;
 
-    @Column(name = "detalleEntrada_iddetalleEntrada")
-    private Integer detalleEntrada_iddetalleEntrada;
+    @ManyToOne
+    @JoinColumn(name="id_detalle_entrada", nullable = false)
+    private DetalleEntrada detalleEntrada;
 
-    @Column(name = "proveedor_idProveedor")
-    private Integer proveedor_idProveedor;
+    @ManyToOne
+    @JoinColumn(name = "id_proveedor", nullable = false)
+    private Proveedor proveedor;
 
     public Integer getIddetalleNea() {
         return iddetalleNea;
@@ -52,19 +55,19 @@ public class DetalleNea {
         this.observaciones = observaciones;
     }
 
-    public Integer getDetalleEntrada_iddetalleEntrada() {
-        return detalleEntrada_iddetalleEntrada;
+    public DetalleEntrada getDetalleEntrada() {
+        return detalleEntrada;
     }
 
-    public void setDetalleEntrada_iddetalleEntrada(Integer detalleEntrada_iddetalleEntrada) {
-        this.detalleEntrada_iddetalleEntrada = detalleEntrada_iddetalleEntrada;
+    public void setDetalleEntrada(DetalleEntrada detalleEntrada) {
+        this.detalleEntrada = detalleEntrada;
     }
 
-    public Integer getProveedor_idProveedor() {
-        return proveedor_idProveedor;
+    public Proveedor getProveedor() {
+        return proveedor;
     }
 
-    public void setProveedor_idProveedor(Integer proveedor_idProveedor) {
-        this.proveedor_idProveedor = proveedor_idProveedor;
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 }

@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,53 +17,75 @@ public class Proveedor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "`idproveedor`")
     private Integer idProveedor;
-    @Column(name = "`persona_idpersona`")
-    private Integer persona_idpersona;
-    @Column (name = "`ruc`")
-    private String RUC;
-    @Column (name = "`descripcion`")
+    @ManyToOne
+    @JoinColumn(name = "id_persona", nullable = false)
+    private Persona persona;
+
+    @Column (name = "ruc", nullable = false, unique = true, length = 11)
+    private String ruc;
+
+    @Column (name = "descripcion")
     private String descripcion;
-    @Column (name = "`codigoUbigeo`")
+
+    @Column (name = "codigo_ubigeo", nullable = false)
     private String codigoUbigeo;
-    @Column (name = "`direccion`")
+
+    @Column (name = "direccion", nullable = false)
     private String direccion;
-    @Column (name = "`departamento`")
+
+    @Column (name = "departamento", nullable = false)
     private String departamento;
-    @Column (name = "`ciudad`")
+
+    @Column (name = "ciudad", nullable = false)
     private String ciudad;
-    @Column (name = "`distrito`")
+
+    @Column (name = "distrito", nullable = false)
     private String distrito;
-    @Column (name = "`codigoPostal`")
+
+    @Column (name = "codigo_postal", nullable = false)
     private String codigoPostal;
-    @Column (name = "`referenciaUbicacion`")
+
+    @Column (name = "referencia_ubicacion")
     private String referenciaUbicacion;
-    @Column (name = "`correoEmpresa`")
+
+    @Column (name = "correo_empresa", nullable = false)
     private String correoEmpresa;
-    @Column (name = "`telefonoEmpresa`")
+
+    @Column (name = "telefono_empresa", nullable = false)
     private String telefonoEmpresa;
-    @Column (name = "`telefonofijoEmpresa`")
-    private String telefonofijoEmpresa;
-    @Column (name = "`paginaWeb`")
+
+    @Column (name = "telefono_fijo_empresa")
+    private String telefonoFijoEmpresa;
+
+    @Column (name = "pagina_web")
     private String paginaWeb;
-    @Column (name = "`nombreSectorista`")
+
+    @Column (name = "nombre_sectorista", nullable = false)
     private String nombreSectorista;
-    @Column (name = "`correoSectorista`")
+
+    @Column (name = "correo_sectorista", nullable = false)
     private String correoSectorista;
-    @Column (name = "`celularSectorista`")
+
+    @Column (name = "celular_sectorista", nullable = false)
     private String celularSectorista;
-    @Column (name = "`telefijoSectorista`")
-    private String telefijoSectorista;
-    @Column (name = "`etiquetas`")
+
+    @Column (name = "telefono_fijo_sectorista")
+    private String telefonoFijoSectorista;
+
+    @Column (name = "etiquetas")
     private String etiquetas;
-    @Column (name = "`incidencias`")
+
+    @Column (name = "incidencias")
     private String incidencias;
-    @Column (name = "`fechaRegistro`")
+
+    @Column (name = "fecha_registro", nullable = false)
     private LocalDateTime fechaRegistro;
-    @Column (name = "`calificacion`")
+
+    @Column (name = "calificacion")
     private String calificacion;
-    @Column (name = "`condicionesPago`")
+    
+    @Column (name = "condiciones_pago", nullable = false)
     private String condicionesPago;
 
     public Integer getIdProveedor() {
@@ -70,17 +94,17 @@ public class Proveedor {
     public void setIdProveedor(Integer idProveedor) {
         this.idProveedor = idProveedor;
     }
-    public Integer getPersona_idpersona() {
-        return persona_idpersona;
+    public Persona getPersona() {
+        return persona;
     }
-    public void setPersona_idpersona(Integer persona_idpersona) {
-        this.persona_idpersona = persona_idpersona;
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
     public String getRUC() {
-        return RUC;
+        return ruc;
     }
-    public void setRUC(String RUC) {
-        this.RUC = RUC;
+    public void setRUC(String ruc) {
+        this.ruc = ruc;
     }
     public String getDescripcion() {
         return descripcion;
@@ -142,11 +166,11 @@ public class Proveedor {
     public void setTelefonoEmpresa(String telefonoEmpresa) {
         this.telefonoEmpresa = telefonoEmpresa;
     }
-    public String getTelefonofijoEmpresa() {
-        return telefonofijoEmpresa;
+    public String getTelefonoFijoEmpresa() {
+        return telefonoFijoEmpresa;
     }
-    public void setTelefonofijoEmpresa(String telefonofijoEmpresa) {
-        this.telefonofijoEmpresa = telefonofijoEmpresa;
+    public void setTelefonoFijoEmpresa(String telefonoFijoEmpresa) {
+        this.telefonoFijoEmpresa = telefonoFijoEmpresa;
     }
     public String getPaginaWeb() {
         return paginaWeb;
@@ -172,11 +196,11 @@ public class Proveedor {
     public void setCelularSectorista(String celularSectorista) {
         this.celularSectorista = celularSectorista;
     }
-    public String getTelefijoSectorista() {
-        return telefijoSectorista;
+    public String getTelefonoFijoSectorista() {
+        return telefonoFijoSectorista;
     }
-    public void setTelefijoSectorista(String telefijoSectorista) {
-        this.telefijoSectorista = telefijoSectorista;
+    public void setTelefonoFijoSectorista(String telefonoFijoSectorista) {
+        this.telefonoFijoSectorista = telefonoFijoSectorista;
     }
     public String getEtiquetas() {
         return etiquetas;
@@ -208,4 +232,6 @@ public class Proveedor {
     public void setCondicionesPago(String condicionesPago) {
         this.condicionesPago = condicionesPago;
     }
+
+    
 }

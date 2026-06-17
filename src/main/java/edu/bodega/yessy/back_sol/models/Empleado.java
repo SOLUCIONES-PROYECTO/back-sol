@@ -1,12 +1,15 @@
 package edu.bodega.yessy.back_sol.models;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -15,28 +18,37 @@ public class Empleado {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idempleado")
     private Integer idempleado;
-    @Column(name = "persona_idpersona")
-    private Integer persona_idpersona;
 
-    @Column
+    @ManyToOne
+    @JoinColumn(name = "id_persona", nullable = false)
+    private Persona persona;
+
+    @Column (name = "cargo", nullable = false)
     private String cargo;
-    @Column
+
+    @Column (name = "area", nullable = false)
     private String area;
-    @Column
+
+    @Column (name = "fecha_contratacion", nullable = false)
     private LocalDate fechaContratacion;
-    @Column
+
+    @Column (name = "estado", nullable = false)
     private String estado;
-    @Column
+
+    @Column (name = "usuario_sistema", nullable = false)
     private String usuarioSistema;
-    @Column
+
+    @Column (name = "rol", nullable = false)
     private String rol;
-    @Column
-    private LocalDate fechaRegistro;
-    @Column
+
+    @Column (name = "fecha_registro", nullable = false)
+    private LocalDateTime fechaRegistro;
+
+    @Column (name = "turno_trabajo", nullable = false)
     private String turnoTrabajo;
-    @Column
+
+    @Column (name = "supervisor_directo", nullable = false)
     private String supervisorDirecto;
 
     public Integer getIdempleado() {
@@ -45,11 +57,11 @@ public class Empleado {
     public void setIdempleado(Integer idempleado) {
         this.idempleado = idempleado;
     }
-    public Integer getPersona_idpersona() {
-        return persona_idpersona;
+    public Persona getPersona() {
+        return persona;
     }
-    public void setPersona_idpersona(Integer persona_idpersona) {
-        this.persona_idpersona = persona_idpersona;
+    public void setPersona(Persona persona) {
+        this.persona = persona;
     }
     public String getCargo() {
         return cargo;
@@ -87,10 +99,10 @@ public class Empleado {
     public void setRol(String rol) {
         this.rol = rol;
     }
-    public LocalDate getFechaRegistro() {
+    public LocalDateTime getFechaRegistro() {
         return fechaRegistro;
     }
-    public void setFechaRegistro(LocalDate fechaRegistro) {
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
     public String getTurnoTrabajo() {

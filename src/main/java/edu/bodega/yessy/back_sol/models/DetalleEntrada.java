@@ -8,36 +8,39 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "detalleentrada")
+@Table(name = "detalle_entrada")
 public class DetalleEntrada {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "iddetalleEntrada")
     private Integer iddetalleEntrada;
 
-    @Column(name = "docentrada_iddocentrada")
-    private Integer docentrada_iddocentrada;
+    @ManyToOne
+    @JoinColumn(name="id_doc_entrada", nullable = false)
+    private DocEntrada docEntrada;
 
-    @Column(name = "producto_idproducto")
-    private Integer producto_idproducto;
+    @ManyToOne
+    @JoinColumn(name="id_producto", nullable = false)
+    private Producto producto;
 
-    @Column(name = "cantidad")
+    @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
 
-    @Column(name = "subtotal")
+    @Column(name = "sub_total", nullable = false, precision = 10, scale = 2)
     private BigDecimal subtotal;
 
-    @Column(name = "loteproducto")
+    @Column(name = "lote_producto", nullable = false)
     private String loteproducto;
 
-    @Column(name = "fechavencimiento")
+    @Column(name = "fecha_vencimiento", nullable = false)
     private LocalDate fechavencimiento;
 
-    @Column(name = "preciounitario")
+    @Column(name = "precio_unitario", nullable = false, precision = 10, scale = 2)
     private BigDecimal preciounitario;
 
     public Integer getIddetalleEntrada() {
@@ -48,20 +51,20 @@ public class DetalleEntrada {
         this.iddetalleEntrada = iddetalleEntrada;
     }
 
-    public Integer getDocentrada_iddocentrada() {
-        return docentrada_iddocentrada;
+    public DocEntrada getDocEntrada() {
+        return docEntrada;
     }
 
-    public void setDocentrada_iddocentrada(Integer docentrada_iddocentrada) {
-        this.docentrada_iddocentrada = docentrada_iddocentrada;
+    public void setDocEntrada(DocEntrada docEntrada) {
+        this.docEntrada = docEntrada;
     }
 
-    public Integer getProducto_idproducto() {
-        return producto_idproducto;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setProducto_idproducto(Integer producto_idproducto) {
-        this.producto_idproducto = producto_idproducto;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
     public Integer getCantidad() {

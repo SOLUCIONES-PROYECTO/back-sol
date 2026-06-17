@@ -1,51 +1,59 @@
 package edu.bodega.yessy.back_sol.models;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "docentrada")
+@Table(name = "doc_entrada")
 public class DocEntrada {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer iddocentrada;
 
-    @Column(name = "`tipodocentrada_idtipodocentrada`") 
-    private Integer tipodocentrada_idtipodocentrada;
+    @ManyToOne
+    @JoinColumn(name = "id_tipo_doc_entrada", nullable = false)
+    private TipoDocEntrada tipoDocEntrada;
 
-    @Column(name = "`metododepago_idmetododepago`")
-    private Integer metododepago_idmetododepago;
+    @ManyToOne
+    @JoinColumn(name = "id_metodo_pago", nullable = false)
+    private MetodoPago metodoPago;
 
-    @Column(name = "`estadoPago_idestadoPago`")
-    private Integer estadoPago_idestadoPago;
+    @ManyToOne
+    @JoinColumn(name = "id_estado_pago", nullable = false)
+    private EstadoPago estadoPago;
 
-    @Column(name = "`estadoIngreso_idestadoIngreso`")
-    private Integer estadoIngreso_idestadoIngreso;
+    @ManyToOne
+    @JoinColumn(name = "id_estado_ingreso", nullable = false)
+    private EstadoIngreso estadoIngreso;
 
-    @Column(name = "`empleado_idempleado`")
-    private Integer empleado_idempleado;
+    @ManyToOne
+    @JoinColumn(name = "id_empleado", nullable = false)
+    private Empleado empleado;
 
-    @Column(name = "`proveedor_idProveedor`")
-    private Integer proveedor_idProveedor;
+    @ManyToOne
+    @JoinColumn(name = "id_Proveedor", nullable = false)
+    private Proveedor proveedor;
 
-    @Column(name = "`numeroDocumento`")
+    @Column(name = "numero_documento", nullable = false)
     private String numeroDocumento;
 
-    @Column(name = "`fecha_ingreso`")
-    private Date fecha_ingreso;
+    @Column(name = "fecha_ingreso", nullable = false)
+    private LocalDateTime fecha_ingreso;
 
-    @Column(name = "`incidencias`")
+    @Column(name = "incidencias")
     private String incidencias;
 
-    @Column(name = "`precioTotal`")
+    @Column(name = "precio_total", nullable = false, precision = 10, scale = 2)
     private BigDecimal precioTotal;
 
     public Integer getIddocentrada() {
@@ -56,52 +64,52 @@ public class DocEntrada {
         this.iddocentrada = iddocentrada;
     }
 
-    public Integer getTipodocentrada_idtipodocentrada() {
-        return tipodocentrada_idtipodocentrada;
+    public TipoDocEntrada getTipoDocEntrada() {
+        return tipoDocEntrada;
     }
 
-    public void setTipodocentrada_idtipodocentrada(Integer tipodocentrada_idtipodocentrada) {
-        this.tipodocentrada_idtipodocentrada = tipodocentrada_idtipodocentrada;
+    public void setTipoDocEntrada(TipoDocEntrada tipoDocEntrada) {
+        this.tipoDocEntrada = tipoDocEntrada;
     }
 
-    public Integer getMetododepago_idmetododepago() {
-        return metododepago_idmetododepago;
+    public MetodoPago getMetodoPago() {
+        return metodoPago;
     }
 
-    public void setMetododepago_idmetododepago(Integer metododepago_idmetododepago) {
-        this.metododepago_idmetododepago = metododepago_idmetododepago;
+    public void setMetodoPago(MetodoPago metodoPago) {
+        this.metodoPago = metodoPago;
     }
 
-    public Integer getEstadoPago_idestadoPago() {
-        return estadoPago_idestadoPago;
+    public EstadoPago getEstadoPago() {
+        return estadoPago;
     }
 
-    public void setEstadoPago_idestadoPago(Integer estadoPago_idestadoPago) {
-        this.estadoPago_idestadoPago = estadoPago_idestadoPago;
+    public void setEstadoPago(EstadoPago estadoPago) {
+        this.estadoPago = estadoPago;
     }
 
-    public Integer getEstadoIngreso_idestadoIngreso() {
-        return estadoIngreso_idestadoIngreso;
+    public EstadoIngreso getEstadoIngreso() {
+        return estadoIngreso;
     }
 
-    public void setEstadoIngreso_idestadoIngreso(Integer estadoIngreso_idestadoIngreso) {
-        this.estadoIngreso_idestadoIngreso = estadoIngreso_idestadoIngreso;
+    public void setEstadoIngreso(EstadoIngreso estadoIngreso) {
+        this.estadoIngreso = estadoIngreso;
     }
 
-    public Integer getEmpleado_idempleado() {
-        return empleado_idempleado;
+    public Empleado getEmpleado() {
+        return empleado;
     }
 
-    public void setEmpleado_idempleado(Integer empleado_idempleado) {
-        this.empleado_idempleado = empleado_idempleado;
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
     }
 
-    public Integer getProveedor_idProveedor() {
-        return proveedor_idProveedor;
+    public Proveedor getProveedor() {
+        return proveedor;
     }
 
-    public void setProveedor_idProveedor(Integer proveedor_idProveedor) {
-        this.proveedor_idProveedor = proveedor_idProveedor;
+    public void setProveedor(Proveedor proveedor) {
+        this.proveedor = proveedor;
     }
 
     public String getNumeroDocumento() {
@@ -112,11 +120,11 @@ public class DocEntrada {
         this.numeroDocumento = numeroDocumento;
     }
 
-    public Date getFecha_ingreso() {
+    public LocalDateTime getFecha_ingreso() {
         return fecha_ingreso;
     }
 
-    public void setFecha_ingreso(Date fecha_ingreso) {
+    public void setFecha_ingreso(LocalDateTime fecha_ingreso) {
         this.fecha_ingreso = fecha_ingreso;
     }
 
@@ -135,4 +143,6 @@ public class DocEntrada {
     public void setPrecioTotal(BigDecimal precioTotal) {
         this.precioTotal = precioTotal;
     }
+
+    
 }

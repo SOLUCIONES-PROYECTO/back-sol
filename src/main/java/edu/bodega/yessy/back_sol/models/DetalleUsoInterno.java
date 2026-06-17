@@ -5,25 +5,28 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "detalleusointerno")
+@Table(name = "detalle_uso_interno")
 public class DetalleUsoInterno {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "iddetalleusoInterno")
     private Integer iddetalleusoInterno;
 
     @Column(name = "descripcion")
     private String descripcion;
 
-    @Column(name = "detalleSalida_iddetalleSalida")
-    private Integer detalleSalida_iddetalleSalida;
+    @ManyToOne
+    @JoinColumn(name = "id_detalle_salida", nullable = false)
+    private DetalleSalida detalleSalida;
 
-    @Column(name = "areausoInterno_idareausoInterno")
-    private Integer areausoInterno_idareausoInterno;
+    @ManyToOne
+    @JoinColumn(name="id_area_uso_interno", nullable = false)
+    private AreaUsoInterno areausoInterno;
 
     public Integer getIddetalleusoInterno() {
         return iddetalleusoInterno;
@@ -41,19 +44,19 @@ public class DetalleUsoInterno {
         this.descripcion = descripcion;
     }
 
-    public Integer getDetalleSalida_iddetalleSalida() {
-        return detalleSalida_iddetalleSalida;
+    public DetalleSalida getDetalleSalida() {
+        return detalleSalida;
     }
 
-    public void setDetalleSalida_iddetalleSalida(Integer detalleSalida_iddetalleSalida) {
-        this.detalleSalida_iddetalleSalida = detalleSalida_iddetalleSalida;
+    public void setDetalleSalida(DetalleSalida detalleSalida) {
+        this.detalleSalida = detalleSalida;
     }
 
-    public Integer getAreausoInterno_idareausoInterno() {
-        return areausoInterno_idareausoInterno;
+    public AreaUsoInterno getAreausoInterno() {
+        return areausoInterno;
     }
 
-    public void setAreausoInterno_idareausoInterno(Integer areausoInterno_idareausoInterno) {
-        this.areausoInterno_idareausoInterno = areausoInterno_idareausoInterno;
+    public void setAreausoInterno(AreaUsoInterno areausoInterno) {
+        this.areausoInterno = areausoInterno;
     }
 }

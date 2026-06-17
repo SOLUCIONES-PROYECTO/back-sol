@@ -5,21 +5,23 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "detallemerma")
+@Table(name = "detalle_merma")
 public class DetalleMerma {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "iddetalleMerma")
     private Integer iddetalleMerma;
 
-    @Column(name = "detalleSalida_iddetalleSalida")
-    private Integer detalleSalida_iddetalleSalida;
+    @ManyToOne
+    @JoinColumn(name = "id_detalle_salida", nullable = false)
+    private DetalleSalida detalleSalida;
 
-    @Column(name = "motivoMerma")
+    @Column(name = "motivo_merma", nullable = false)
     private String motivoMerma;
 
     @Column(name = "descripcion")
@@ -33,12 +35,12 @@ public class DetalleMerma {
         this.iddetalleMerma = iddetalleMerma;
     }
 
-    public Integer getDetalleSalida_iddetalleSalida() {
-        return detalleSalida_iddetalleSalida;
+    public DetalleSalida getDetalleSalida() {
+        return detalleSalida;
     }
 
-    public void setDetalleSalida_iddetalleSalida(Integer detalleSalida_iddetalleSalida) {
-        this.detalleSalida_iddetalleSalida = detalleSalida_iddetalleSalida;
+    public void setDetalleSalida(DetalleSalida detalleSalida) {
+        this.detalleSalida = detalleSalida;
     }
 
     public String getMotivoMerma() {

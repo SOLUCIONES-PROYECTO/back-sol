@@ -21,4 +21,17 @@ public class ClienteService {
     public Cliente nuevo(Cliente cliente) {
         return clienteRepository.save(cliente);
     }
+
+    public boolean eliminar(Integer id) {
+        try {
+            clienteRepository.deleteById(id);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public Cliente actualizar(Cliente cliente) {
+        return clienteRepository.save(cliente);
+    }
 }

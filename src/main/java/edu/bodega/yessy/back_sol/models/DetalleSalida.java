@@ -7,31 +7,34 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "detallesalida")
+@Table(name = "detalle_salida")
 public class DetalleSalida {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "iddetalleSalida")
     private Integer iddetalleSalida;
 
-    @Column(name = "producto_idproducto")
-    private Integer producto_idproducto;
+    @ManyToOne
+    @JoinColumn(name = "id_producto", nullable = false)
+    private Producto producto;
 
-    @Column(name = "cantidad")
+    @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
 
-    @Column(name = "precioUnitario")
+    @Column(name = "precio_unitario", nullable = false, precision = 10, scale = 2)
     private BigDecimal precioUnitario;
 
-    @Column(name = "subtotal")
+    @Column(name = "sub_total", nullable = false, precision = 10, scale = 2)
     private BigDecimal subtotal;
 
-    @Column(name = "docsalida_iddocsalida")
-    private Integer docsalida_iddocsalida;
+    @ManyToOne
+    @JoinColumn(name = "id_doc_salida", nullable = false)
+    private DocSalida docSalida;
 
     public Integer getIddetalleSalida() {
         return iddetalleSalida;
@@ -41,12 +44,12 @@ public class DetalleSalida {
         this.iddetalleSalida = iddetalleSalida;
     }
 
-    public Integer getProducto_idproducto() {
-        return producto_idproducto;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setProducto_idproducto(Integer producto_idproducto) {
-        this.producto_idproducto = producto_idproducto;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
     }
 
     public Integer getCantidad() {
@@ -73,11 +76,11 @@ public class DetalleSalida {
         this.subtotal = subtotal;
     }
 
-    public Integer getDocsalida_iddocsalida() {
-        return docsalida_iddocsalida;
+    public DocSalida getDocSalida() {
+        return docSalida;
     }
 
-    public void setDocsalida_iddocsalida(Integer docsalida_iddocsalida) {
-        this.docsalida_iddocsalida = docsalida_iddocsalida;
+    public void setDocSalida(DocSalida docSalida) {
+        this.docSalida = docSalida;
     }
 }

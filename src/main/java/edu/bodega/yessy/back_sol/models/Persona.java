@@ -1,6 +1,7 @@
 package edu.bodega.yessy.back_sol.models;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,85 +16,113 @@ public class Persona {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idpersona")
     private Integer idpersona;
-    @Column
+
+    @Column (name="nombre", nullable = false)
     private String nombre;
-    @Column
+
+    @Column (name="apellido", nullable = false)
     private String apellido;
-    @Column
+
+    @Column (name = "dni", nullable = false, unique = true, length = 8)
     private String dni;
-    @Column
+
+    @Column (name = "direccion", nullable = false)
     private String direccion;
-    @Column
+
+    @Column (name = "fecha_nacimiento", nullable = false)
     private LocalDate fechaNacimiento;
-    @Column
+
+    @Column (name = "telefono", nullable = false)
     private String telefono;
-    @Column
+
+    @Column (name = "correo", nullable = false)
     private String correo;
-    @Column
+
+    @Column (name = "genero", nullable = false)
     private String genero;
-    @Column
-    private LocalDate fechaRegistro;
+
+    @Column (name = "fecha_registro", nullable = false)
+    private LocalDateTime fechaRegistro;
 
     public Integer getIdpersona() {
         return idpersona;
     }
+
     public void setIdpersona(Integer idpersona) {
         this.idpersona = idpersona;
     }
+
     public String getNombre() {
         return nombre;
     }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
+
     public String getApellido() {
         return apellido;
     }
+
     public void setApellido(String apellido) {
         this.apellido = apellido;
     }
+
     public String getDni() {
         return dni;
     }
+
     public void setDni(String dni) {
         this.dni = dni;
     }
+
     public String getDireccion() {
         return direccion;
     }
+
     public void setDireccion(String direccion) {
         this.direccion = direccion;
     }
+
     public LocalDate getFechaNacimiento() {
         return fechaNacimiento;
     }
+
     public void setFechaNacimiento(LocalDate fechaNacimiento) {
         this.fechaNacimiento = fechaNacimiento;
     }
+
     public String getTelefono() {
         return telefono;
     }
+
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
+
     public String getCorreo() {
         return correo;
     }
+
     public void setCorreo(String correo) {
         this.correo = correo;
     }
+
     public String getGenero() {
         return genero;
     }
+
     public void setGenero(String genero) {
         this.genero = genero;
     }
-    public LocalDate getFechaRegistro() {
+
+    public LocalDateTime getFechaRegistro() {
         return fechaRegistro;
     }
-    public void setFechaRegistro(LocalDate fechaRegistro) {
+
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
+    
 }

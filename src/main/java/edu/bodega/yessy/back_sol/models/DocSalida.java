@@ -1,50 +1,56 @@
 package edu.bodega.yessy.back_sol.models;
 
 import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "docsalida")
+@Table(name = "doc_salida")
 public class DocSalida {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer iddocsalida;
 
-    @Column(name = "`tipodocsalida_idtipodocsalida`")
-    private Integer tipodocsalida_idtipodocsalida;
+    @ManyToOne
+    @JoinColumn(name = "id_tipo_doc_salida", nullable = false)
+    private TipoDocSalida tipoDocSalida;
 
-    @Column(name = "`cliente_idcliente`")
-    private Integer cliente_idcliente;
+    @ManyToOne
+    @JoinColumn(name = "id_cliente", nullable = false)
+    private Cliente cliente;
 
-    @Column(name = "`empleado_idempleado`")
-    private Integer empleado_idempleado;
+    @ManyToOne
+    @JoinColumn(name = "id_empleado", nullable = false)
+    private Empleado empleado;
 
-    @Column(name = "`numeroDocumento`")
+    @Column(name = "numero_documento", nullable = false)
     private String numeroDocumento;
 
-    @Column (name = "`fechaRegistro`")
-    private Timestamp fechaRegistro;
+    @Column (name = "fecha_registro", nullable = false)
+    private LocalDateTime fechaRegistro;
 
-    @Column(name = "`fechaEgreso`")
-    private Date fechaEgreso;
+    @Column(name = "fecha_egreso", nullable = false)
+    private LocalDate fechaEgreso;
 
-    @Column (name = "`descripcion`")
+    @Column (name = "descripcion")
     private String descripcion;
 
-    @Column (name = "`totalSalida`")
+    @Column (name = "total_salida", nullable = false, precision = 10, scale = 2)
     private BigDecimal totalSalida;
 
-    @Column(name = "`metododepago_idmetododepago`")
-    private Integer metododepago_idmetododepago;
+    @ManyToOne
+    @JoinColumn(name = "id_metodo_pago", nullable = false)
+    private MetodoPago metodoPago;
 
     public Integer getIddocsalida() {
         return iddocsalida;
@@ -54,28 +60,28 @@ public class DocSalida {
         this.iddocsalida = iddocsalida;
     }
 
-    public Integer getTipodocsalida_idtipodocsalida() {
-        return tipodocsalida_idtipodocsalida;
+    public TipoDocSalida getTipoDocSalida() {
+        return tipoDocSalida;
     }
 
-    public void setTipodocsalida_idtipodocsalida(Integer tipodocsalida_idtipodocsalida) {
-        this.tipodocsalida_idtipodocsalida = tipodocsalida_idtipodocsalida;
+    public void setTipoDocSalida(TipoDocSalida tipoDocSalida) {
+        this.tipoDocSalida = tipoDocSalida;
     }
 
-    public Integer getCliente_idcliente() {
-        return cliente_idcliente;
+    public Cliente getCliente() {
+        return cliente;
     }
 
-    public void setCliente_idcliente(Integer cliente_idcliente) {
-        this.cliente_idcliente = cliente_idcliente;
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
     }
 
-    public Integer getEmpleado_idempleado() {
-        return empleado_idempleado;
+    public Empleado getEmpleado() {
+        return empleado;
     }
 
-    public void setEmpleado_idempleado(Integer empleado_idempleado) {
-        this.empleado_idempleado = empleado_idempleado;
+    public void setEmpleado(Empleado empleado) {
+        this.empleado = empleado;
     }
 
     public String getNumeroDocumento() {
@@ -86,19 +92,19 @@ public class DocSalida {
         this.numeroDocumento = numeroDocumento;
     }
 
-    public Timestamp getFechaRegistro() {
+    public LocalDateTime getFechaRegistro() {
         return fechaRegistro;
     }
 
-    public void setFechaRegistro(Timestamp fechaRegistro) {
+    public void setFechaRegistro(LocalDateTime fechaRegistro) {
         this.fechaRegistro = fechaRegistro;
     }
 
-    public Date getFechaEgreso() {
+    public LocalDate getFechaEgreso() {
         return fechaEgreso;
     }
 
-    public void setFechaEgreso(Date fechaEgreso) {
+    public void setFechaEgreso(LocalDate fechaEgreso) {
         this.fechaEgreso = fechaEgreso;
     }
 
@@ -118,11 +124,13 @@ public class DocSalida {
         this.totalSalida = totalSalida;
     }
 
-    public Integer getMetododepago_idmetododepago() {
-        return metododepago_idmetododepago;
+    public MetodoPago getMetodoPago() {
+        return metodoPago;
     }
 
-    public void setMetododepago_idmetododepago(Integer metododepago_idmetododepago) {
-        this.metododepago_idmetododepago = metododepago_idmetododepago;
+    public void setMetodoPago(MetodoPago metodoPago) {
+        this.metodoPago = metodoPago;
     }
+
+    
 }
