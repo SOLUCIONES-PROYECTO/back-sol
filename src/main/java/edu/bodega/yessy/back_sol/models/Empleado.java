@@ -53,15 +53,15 @@ public class Empleado {
 
 
     
-    @Column(name = "contraseña", nullable = false)
-    private String contraseña;
+    @Column(name = "password_hash", nullable = false)
+    private String passwordhash;
 
     public String getContrasena() {
-    return contraseña;
+    return passwordhash;
     }
 
     public void setContrasena(String contraseña) {
-    this.contraseña = contraseña;
+    this.passwordhash = contraseña;
     }
 
 

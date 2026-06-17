@@ -1,4 +1,4 @@
-package edu.bodega.yessy.util;
+package edu.bodega.yessy.back_sol.util;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
