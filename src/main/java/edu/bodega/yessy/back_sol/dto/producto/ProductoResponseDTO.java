@@ -4,32 +4,19 @@ import java.math.BigDecimal;
 
 public class ProductoResponseDTO {
     private Integer idproducto;
-
-private String nombre;
-
-private String descripcion;
-
-private String categoria;
-
-private String proveedor;
-
-private BigDecimal precioCompra;
-
-private BigDecimal precioVenta;
-
-private Integer stockActual;
-
-private Integer stockMinimo;
-
-private String estado;
-
-private String unidadMedida;
-
-private String imagen;
-
-private BigDecimal margen;
-
-private BigDecimal ganancia;
+    private String nombre;
+    private String descripcion;
+    private String categoria;
+    private String proveedor;
+    private BigDecimal precioCompra;
+    private BigDecimal precioVenta;
+    private Integer stockActual;
+    private Integer stockMinimo;
+    private String estado;
+    private String unidadMedida;
+    private String imagen;
+    private BigDecimal margen;
+    private BigDecimal ganancia;
 
 public Integer getIdproducto() {
     return idproducto;
