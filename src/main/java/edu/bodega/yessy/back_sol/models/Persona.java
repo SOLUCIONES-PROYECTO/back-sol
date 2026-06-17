@@ -45,6 +45,7 @@ public class Persona {
     @Column (name = "fecha_registro", nullable = false)
     private LocalDateTime fechaRegistro;
 
+
     public Integer getIdpersona() {
         return idpersona;
     }

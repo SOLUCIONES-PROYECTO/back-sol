@@ -51,6 +51,21 @@ public class Empleado {
     @Column (name = "supervisor_directo", nullable = false)
     private String supervisorDirecto;
 
+
+    
+    @Column(name = "contraseña", nullable = false)
+    private String contraseña;
+
+    public String getContrasena() {
+    return contraseña;
+    }
+
+    public void setContrasena(String contraseña) {
+    this.contraseña = contraseña;
+    }
+
+
+
     public Integer getIdempleado() {
         return idempleado;
     }
