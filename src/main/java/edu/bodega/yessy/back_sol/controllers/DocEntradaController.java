@@ -4,13 +4,17 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.bodega.yessy.back_sol.models.DocEntrada;
+import edu.bodega.yessy.back_sol.dto.docentrada.DocEntradaRequestDTO;
+import edu.bodega.yessy.back_sol.dto.docentrada.DocEntradaResponseDTO;
 import edu.bodega.yessy.back_sol.services.DocEntradaService;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -19,15 +23,33 @@ import edu.bodega.yessy.back_sol.services.DocEntradaService;
 public class DocEntradaController {
 
     @Autowired
-    DocEntradaService docEntradaService;
+    private DocEntradaService docEntradaService;
 
     @GetMapping
-    public ArrayList<DocEntrada> listarDocEntrada() {
+    public ArrayList<DocEntradaResponseDTO> listarDocEntrada() {
         return docEntradaService.listar();
     }
 
     @PostMapping
-    public DocEntrada nuevoDocEntrada(@RequestBody DocEntrada docEntrada) {
-        return docEntradaService.nuevo(docEntrada);
+    public DocEntradaResponseDTO nuevoDocEntrada(@RequestBody DocEntradaRequestDTO dto) {
+        return docEntradaService.nuevo(dto);
+    }
+
+    @GetMapping("/{id}")
+    public DocEntradaResponseDTO buscarDocEntrada(@PathVariable Integer id) {
+        return docEntradaService.buscar(id);
+    }
+
+    @PutMapping("/{id}")
+    public DocEntradaResponseDTO actualizarDocEntrada(
+            @PathVariable Integer id,
+            @RequestBody DocEntradaRequestDTO dto) {
+
+        return docEntradaService.actualizar(id, dto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void eliminarDocEntrada(@PathVariable Integer id) {
+        docEntradaService.eliminar(id);
     }
 }
