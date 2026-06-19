@@ -92,59 +92,71 @@ public class ProductoService {
     }
 
     public ProductoResponseDTO actualizar(
-        Integer id,
-        ProductoRequestDTO dto) {
+            Integer id,
+            ProductoRequestDTO dto) {
 
-    Producto producto = productoRepository
-            .findById(id)
-            .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        Producto producto = productoRepository
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
-    Proveedor proveedor = proveedorRepository
-            .findById(dto.getIdProveedor())
-            .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
+        Proveedor proveedor = proveedorRepository
+                .findById(dto.getIdProveedor())
+                .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
 
-    EstadoProducto estado = estadoProductoRepository
-            .findById(dto.getIdEstado())
-            .orElseThrow(() -> new RuntimeException("Estado no encontrado"));
+        EstadoProducto estado = estadoProductoRepository
+                .findById(dto.getIdEstado())
+                .orElseThrow(() -> new RuntimeException("Estado no encontrado"));
 
-    UnidadMedida unidadMedida = unidadMedidaRepository
-            .findById(dto.getIdUnidadMedida())
-            .orElseThrow(() -> new RuntimeException("Unidad de medida no encontrada"));
+        UnidadMedida unidadMedida = unidadMedidaRepository
+                .findById(dto.getIdUnidadMedida())
+                .orElseThrow(() -> new RuntimeException("Unidad de medida no encontrada"));
 
-    producto.setNombre(dto.getNombre());
-    producto.setDescripcion(dto.getDescripcion());
-    producto.setCategoria(dto.getCategoria());
+        producto.setNombre(dto.getNombre());
+        producto.setDescripcion(dto.getDescripcion());
+        producto.setCategoria(dto.getCategoria());
 
-    producto.setProveedor(proveedor);
+        producto.setProveedor(proveedor);
 
-    producto.setPrecioCompra(dto.getPrecioCompra());
-    producto.setPrecioVenta(dto.getPrecioVenta());
+        producto.setPrecioCompra(dto.getPrecioCompra());
+        producto.setPrecioVenta(dto.getPrecioVenta());
 
-    producto.setStockMinimo(dto.getStockMinimo());
-    producto.setStockActual(dto.getStockActual());
+        producto.setStockMinimo(dto.getStockMinimo());
+        producto.setStockActual(dto.getStockActual());
 
-    producto.setImagen(dto.getImagen());
+        producto.setImagen(dto.getImagen());
 
-    producto.setMargen(dto.getMargen());
-    producto.setGanancia(dto.getGanancia());
+        producto.setMargen(dto.getMargen());
+        producto.setGanancia(dto.getGanancia());
 
-    producto.setEstado(estado);
+        producto.setEstado(estado);
 
-    producto.setUnidadMedida(unidadMedida);
+        producto.setUnidadMedida(unidadMedida);
 
-    Producto actualizado = productoRepository.save(producto);
+        Producto actualizado = productoRepository.save(producto);
 
-    return convertirDTO(actualizado);
-}
+        return convertirDTO(actualizado);
+    }
 
-public void eliminar(Integer id) {
+    public void eliminar(Integer id) {
 
-    Producto producto = productoRepository
-            .findById(id)
-            .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+        Producto producto = productoRepository
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
-    productoRepository.delete(producto);
-}
+        if ("Disponible".equalsIgnoreCase(producto.getEstado().getNombre())) {
+            throw new RuntimeException(
+                    "No se puede eliminar un producto en estado Disponible. Cambia su estado a 'No Disponible' primero."
+            );
+        }
+
+        try {
+            productoRepository.delete(producto);
+        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+            throw new RuntimeException(
+                    "No se puede eliminar este producto porque ya tiene movimientos registrados (ventas/salidas)."
+            );
+        }
+    }
 
     private ProductoResponseDTO convertirDTO(Producto producto) {
 
@@ -171,9 +183,9 @@ public void eliminar(Integer id) {
         dto.setUnidadMedida(producto.getUnidadMedida().getNombre());
 
         dto.setStockMinimo(producto.getStockMinimo());
-dto.setImagen(producto.getImagen());
-dto.setMargen(producto.getMargen());
-dto.setGanancia(producto.getGanancia());
+        dto.setImagen(producto.getImagen());
+        dto.setMargen(producto.getMargen());
+        dto.setGanancia(producto.getGanancia());
         return dto;
     }
 }

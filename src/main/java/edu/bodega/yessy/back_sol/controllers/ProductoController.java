@@ -1,8 +1,11 @@
 package edu.bodega.yessy.back_sol.controllers;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 import edu.bodega.yessy.back_sol.dto.producto.ProductoRequestDTO;
 import edu.bodega.yessy.back_sol.dto.producto.ProductoResponseDTO;
 import edu.bodega.yessy.back_sol.services.ProductoService;
-
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
@@ -54,11 +56,15 @@ public class ProductoController {
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarProducto(
-            @PathVariable Integer id) {
-
-        productoService.eliminar(id);
+    public ResponseEntity<?> eliminarProducto(@PathVariable Integer id) {
+        try {
+            productoService.eliminar(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(Map.of("mensaje", e.getMessage()));
+        }
     }
-
 
 }
