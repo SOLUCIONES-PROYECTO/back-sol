@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.bodega.yessy.back_sol.dto.tipodocsalida.TipoDocSalidaRequestDTO;
+import edu.bodega.yessy.back_sol.dto.tipodocsalida.TipoDocSalidaResponseDTO;
 import edu.bodega.yessy.back_sol.models.TipoDocSalida;
 import edu.bodega.yessy.back_sol.repositories.TipoDocSalidaRepository;
 
@@ -12,13 +14,70 @@ import edu.bodega.yessy.back_sol.repositories.TipoDocSalidaRepository;
 public class TipoDocSalidaService {
 
     @Autowired
-    TipoDocSalidaRepository tipoDocSalidaRepository;
+    private TipoDocSalidaRepository tipoDocSalidaRepository;
 
-    public ArrayList<TipoDocSalida> listar() {
-        return (ArrayList<TipoDocSalida>) tipoDocSalidaRepository.findAll();
+    // ================= LISTAR =================
+    public ArrayList<TipoDocSalidaResponseDTO> listar() {
+
+        ArrayList<TipoDocSalidaResponseDTO> lista = new ArrayList<>();
+
+        for (TipoDocSalida t : tipoDocSalidaRepository.findAll()) {
+            lista.add(convertirDTO(t));
+        }
+
+        return lista;
     }
 
-    public TipoDocSalida nuevo(TipoDocSalida tipoDocSalida) {
-        return tipoDocSalidaRepository.save(tipoDocSalida);
+    // ================= CREAR =================
+    public TipoDocSalidaResponseDTO nuevo(TipoDocSalidaRequestDTO dto) {
+
+        TipoDocSalida t = new TipoDocSalida();
+
+        t.setNombre(dto.getNombre());
+        t.setDescripcion(dto.getDescripcion());
+
+        return convertirDTO(tipoDocSalidaRepository.save(t));
+    }
+
+    // ================= BUSCAR =================
+    public TipoDocSalidaResponseDTO buscar(Integer id) {
+
+        TipoDocSalida t = tipoDocSalidaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("TipoDocSalida no encontrado"));
+
+        return convertirDTO(t);
+    }
+
+    // ================= ACTUALIZAR =================
+    public TipoDocSalidaResponseDTO actualizar(Integer id, TipoDocSalidaRequestDTO dto) {
+
+        TipoDocSalida t = tipoDocSalidaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("TipoDocSalida no encontrado"));
+
+        t.setNombre(dto.getNombre());
+        t.setDescripcion(dto.getDescripcion());
+
+        return convertirDTO(tipoDocSalidaRepository.save(t));
+    }
+
+    // ================= ELIMINAR =================
+    public void eliminar(Integer id) {
+
+        TipoDocSalida t = tipoDocSalidaRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("TipoDocSalida no encontrado"));
+
+        tipoDocSalidaRepository.delete(t);
+    }
+
+    // ================= MAPPER =================
+    private TipoDocSalidaResponseDTO convertirDTO(TipoDocSalida t) {
+
+        TipoDocSalidaResponseDTO dto = new TipoDocSalidaResponseDTO();
+
+        dto.setIdTipoDocSalida(t.getIdtipodocsalida());
+        dto.setNombre(t.getNombre());
+        dto.setDescripcion(t.getDescripcion());
+
+        return dto;
     }
 }
