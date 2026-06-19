@@ -30,20 +30,22 @@ public class Persona {
     @Column (name = "direccion", nullable = false)
     private String direccion;
 
-    @Column (name = "fecha_nacimiento", nullable = false)
+    @Column(name = "fechaNacimiento", nullable = false)
     private LocalDate fechaNacimiento;
 
+    @Column(name = "genero", nullable = false)
+    private String genero;
+
+    @Column(name = "fechaRegistro", nullable = false)
+    private LocalDateTime fechaRegistro;
+    
     @Column (name = "telefono", nullable = false)
     private String telefono;
 
     @Column (name = "correo", nullable = false)
     private String correo;
 
-    @Column (name = "genero", nullable = false)
-    private String genero;
 
-    @Column (name = "fecha_registro", nullable = false)
-    private LocalDateTime fechaRegistro;
 
 
     public Integer getIdpersona() {
