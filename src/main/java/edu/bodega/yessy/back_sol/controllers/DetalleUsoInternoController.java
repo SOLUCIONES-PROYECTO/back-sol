@@ -3,29 +3,50 @@ package edu.bodega.yessy.back_sol.controllers;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import edu.bodega.yessy.back_sol.models.DetalleUsoInterno;
+import edu.bodega.yessy.back_sol.dto.detalleusointerno.DetalleUsoInternoRequestDTO;
+import edu.bodega.yessy.back_sol.dto.detalleusointerno.DetalleUsoInternoResponseDTO;
 import edu.bodega.yessy.back_sol.services.DetalleUsoInternoService;
 
 @CrossOrigin(origins = "http://localhost:4200")
 @RestController
-@RequestMapping("/detalleusointerno")
+@RequestMapping("/detalleusointernos")
 public class DetalleUsoInternoController {
 
     @Autowired
-    DetalleUsoInternoService detalleUsoInternoService;
+    private DetalleUsoInternoService detalleUsoInternoService;
+
+    // ================= LISTAR =================
     @GetMapping
-    public ArrayList<DetalleUsoInterno> listarDetalleUsoInternos() {
+    public ArrayList<DetalleUsoInternoResponseDTO> listar() {
         return detalleUsoInternoService.listar();
     }
+
+    // ================= CREAR =================
     @PostMapping
-    public DetalleUsoInterno nuevoDetalleUsoInterno(@RequestBody DetalleUsoInterno detalleUsoInterno) {
-        return detalleUsoInternoService.nuevo(detalleUsoInterno);
+    public DetalleUsoInternoResponseDTO crear(@RequestBody DetalleUsoInternoRequestDTO dto) {
+        return detalleUsoInternoService.nuevo(dto);
+    }
+
+    // ================= BUSCAR =================
+    @GetMapping("/{id}")
+    public DetalleUsoInternoResponseDTO buscar(@PathVariable Integer id) {
+        return detalleUsoInternoService.buscar(id);
+    }
+
+    // ================= ACTUALIZAR =================
+    @PutMapping("/{id}")
+    public DetalleUsoInternoResponseDTO actualizar(
+            @PathVariable Integer id,
+            @RequestBody DetalleUsoInternoRequestDTO dto) {
+
+        return detalleUsoInternoService.actualizar(id, dto);
+    }
+
+    // ================= ELIMINAR =================
+    @DeleteMapping("/{id}")
+    public void eliminar(@PathVariable Integer id) {
+        detalleUsoInternoService.eliminar(id);
     }
 }
