@@ -4,6 +4,7 @@ public class UnidadMedidaResponseDTO {
 
     private Integer idUnidadMedida;
     private String nombre;
+    
     public Integer getIdUnidadMedida() {
         return idUnidadMedida;
     }

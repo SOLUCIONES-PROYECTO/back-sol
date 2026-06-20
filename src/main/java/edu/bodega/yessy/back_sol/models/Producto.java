@@ -8,6 +8,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
@@ -18,13 +19,13 @@ public class Producto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idproducto;
 
-    @Column (name = "nombre", nullable = false)
+    @Column(name = "nombre", nullable = false)
     private String nombre;
 
-    @Column (name = "descripcion")
+    @Column(name = "descripcion")
     private String descripcion;
 
-    @Column (name = "categoria", nullable = false)
+    @Column(name = "categoria", nullable = false)
     private String categoria;
 
     @ManyToOne
@@ -43,7 +44,8 @@ public class Producto {
     @Column(name = "stock_actual", nullable = false)
     private Integer stockActual;
 
-    @Column(name = "imagen")
+    @Lob
+    @Column(name = "imagen", columnDefinition = "LONGTEXT")
     private String imagen;
 
     @Column(name = "margen", nullable = false, precision = 10, scale = 2)

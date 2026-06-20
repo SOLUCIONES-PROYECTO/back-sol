@@ -171,16 +171,17 @@ public class ProductoService {
         dto.setCategoria(producto.getCategoria());
 
         dto.setProveedor(producto.getProveedor().getDescripcion());
-
+        dto.setIdProveedor(producto.getProveedor().getIdProveedor());
+        
         dto.setPrecioCompra(producto.getPrecioCompra());
-
         dto.setPrecioVenta(producto.getPrecioVenta());
-
         dto.setStockActual(producto.getStockActual());
 
         dto.setEstado(producto.getEstado().getNombre());
+        dto.setIdEstado(producto.getEstado().getIdestadoproducto());
 
         dto.setUnidadMedida(producto.getUnidadMedida().getNombre());
+        dto.setIdUnidadMedida(producto.getUnidadMedida().getIdunidadMedida());
 
         dto.setStockMinimo(producto.getStockMinimo());
         dto.setImagen(producto.getImagen());

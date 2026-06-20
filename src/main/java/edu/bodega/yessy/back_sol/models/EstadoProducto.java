@@ -12,6 +12,7 @@ import jakarta.persistence.Table;
 public class EstadoProducto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idestadoproducto")
     private Integer idestadoproducto;
 
     @Column (name = "nombre", nullable = false)

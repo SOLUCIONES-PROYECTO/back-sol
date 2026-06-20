@@ -8,12 +8,15 @@ public class ProductoResponseDTO {
     private String descripcion;
     private String categoria;
     private String proveedor;
+    private Integer idProveedor;
     private BigDecimal precioCompra;
     private BigDecimal precioVenta;
     private Integer stockActual;
     private Integer stockMinimo;
     private String estado;
+    private Integer idEstado;
     private String unidadMedida;
+    private Integer idUnidadMedida;
     private String imagen;
     private BigDecimal margen;
     private BigDecimal ganancia;
@@ -130,6 +133,28 @@ public void setGanancia(BigDecimal ganancia) {
     this.ganancia = ganancia;
 }
 
+    public Integer getIdProveedor() {
+        return idProveedor;
+    }
+
+    public void setIdProveedor(Integer idProveedor) {
+        this.idProveedor = idProveedor;
+    }
+public Integer getIdUnidadMedida() {
+        return idUnidadMedida;
+    }
+
+    public void setIdUnidadMedida(Integer idUnidadMedida) {
+        this.idUnidadMedida = idUnidadMedida;
+    }
+
+        public Integer getIdEstado() {
+        return idEstado;
+    }
+
+    public void setIdEstado(Integer idEstado) {
+        this.idEstado = idEstado;
+    }
     
 
     

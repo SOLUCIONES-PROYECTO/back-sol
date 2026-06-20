@@ -6,6 +6,12 @@ import java.time.LocalDateTime;
 public class DocEntradaResponseDTO {
 
 	private Integer iddocentrada;
+	private Integer idTipoDocEntrada;
+	private Integer idMetodoPago;
+	private Integer idEstadoPago;
+	private Integer idEstadoIngreso;
+	private Integer idEmpleado;
+	private Integer idProveedor;
 	private String tipoDocEntrada;
 	private String metodoPago;
 	private String estadoPago;
@@ -104,5 +110,54 @@ public class DocEntradaResponseDTO {
 	public void setPrecioTotal(BigDecimal precioTotal) {
 		this.precioTotal = precioTotal;
 	}
+
+	public Integer getIdTipoDocEntrada() {
+		return idTipoDocEntrada;
+	}
+
+	public void setIdTipoDocEntrada(Integer idTipoDocEntrada) {
+		this.idTipoDocEntrada = idTipoDocEntrada;
+	}
+
+	public Integer getIdMetodoPago() {
+		return idMetodoPago;
+	}
+
+	public void setIdMetodoPago(Integer idMetodoPago) {
+		this.idMetodoPago = idMetodoPago;
+	}
+
+	public Integer getIdEstadoPago() {
+		return idEstadoPago;
+	}
+
+	public void setIdEstadoPago(Integer idEstadoPago) {
+		this.idEstadoPago = idEstadoPago;
+	}
+
+	public Integer getIdEstadoIngreso() {
+		return idEstadoIngreso;
+	}
+
+	public void setIdEstadoIngreso(Integer idEstadoIngreso) {
+		this.idEstadoIngreso = idEstadoIngreso;
+	}
+
+	public Integer getIdEmpleado() {
+		return idEmpleado;
+	}
+
+	public void setIdEmpleado(Integer idEmpleado) {
+		this.idEmpleado = idEmpleado;
+	}
+
+	public Integer getIdProveedor() {
+		return idProveedor;
+	}
+
+	public void setIdProveedor(Integer idProveedor) {
+		this.idProveedor = idProveedor;
+	}
+	
 
 }

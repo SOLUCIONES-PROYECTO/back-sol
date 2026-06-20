@@ -164,17 +164,23 @@ public class DocEntradaService {
     DocEntradaResponseDTO dto = new DocEntradaResponseDTO();
 
     dto.setIddocentrada(docEntrada.getIddocentrada());
+    dto.setIdTipoDocEntrada(docEntrada.getTipoDocEntrada().getIdtipodocentrada());
     dto.setTipoDocEntrada(docEntrada.getTipoDocEntrada().getNombre());
+    dto.setIdMetodoPago(docEntrada.getMetodoPago().getIdmetododepago());
     dto.setMetodoPago(docEntrada.getMetodoPago().getNombre());
+    dto.setIdMetodoPago(docEntrada.getMetodoPago().getIdmetododepago());
     dto.setEstadoPago(docEntrada.getEstadoPago().getNombre());
+    dto.setIdEstadoPago(docEntrada.getEstadoPago().getIdestadoPago());
     dto.setEstadoIngreso(docEntrada.getEstadoIngreso().getNombre());
+    dto.setIdEstadoIngreso(docEntrada.getEstadoIngreso().getIdestadoIngreso());
     dto.setEmpleado(docEntrada.getEmpleado().getPersona().getNombre() + " " + docEntrada.getEmpleado().getPersona().getApellido());
+    dto.setIdEmpleado(docEntrada.getEmpleado().getIdempleado());
     dto.setProveedor(docEntrada.getProveedor().getPersona().getNombre() + " " + docEntrada.getProveedor().getPersona().getApellido());
+    dto.setIdProveedor(docEntrada.getProveedor().getIdProveedor());
     dto.setNumeroDocumento(docEntrada.getNumeroDocumento());
     dto.setFechaIngreso(docEntrada.getFecha_ingreso());
     dto.setIncidencias(docEntrada.getIncidencias());
     dto.setPrecioTotal(docEntrada.getPrecioTotal());
-
     return dto;
     }
 }
