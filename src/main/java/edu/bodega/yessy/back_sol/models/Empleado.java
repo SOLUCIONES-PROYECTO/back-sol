@@ -50,8 +50,6 @@ public class Empleado {
 
     @Column (name = "supervisor_directo", nullable = false)
     private String supervisorDirecto;
-
-
     
     @Column(name = "password_hash", nullable = false)
     private String passwordhash;
@@ -63,8 +61,6 @@ public class Empleado {
     public void setContrasena(String contraseña) {
     this.passwordhash = contraseña;
     }
-
-
 
     public Integer getIdempleado() {
         return idempleado;
