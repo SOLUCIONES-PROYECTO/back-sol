@@ -7,7 +7,11 @@ import java.time.LocalDateTime;
 public class DocSalidaRequest {
 
     private Integer idTipoDocSalida;
-    private Integer idCliente;
+    
+    private String nombreCliente;
+    private String apellidoCliente;
+    private String dniCliente;
+
     private Integer idEmpleado;
     private String numeroDocumento;
     private LocalDateTime fechaRegistro;
@@ -22,14 +26,6 @@ public class DocSalidaRequest {
 
     public void setIdTipoDocSalida(Integer idTipoDocSalida) {
         this.idTipoDocSalida = idTipoDocSalida;
-    }
-
-    public Integer getIdCliente() {
-        return idCliente;
-    }
-
-    public void setIdCliente(Integer idCliente) {
-        this.idCliente = idCliente;
     }
 
     public Integer getIdEmpleado() {
@@ -87,4 +83,30 @@ public class DocSalidaRequest {
     public void setIdMetodoPago(Integer idMetodoPago) {
         this.idMetodoPago = idMetodoPago;
     }
+
+    public String getNombreCliente() {
+        return nombreCliente;
+    }
+
+    public void setNombreCliente(String nombreCliente) {
+        this.nombreCliente = nombreCliente;
+    }
+
+    public String getApellidoCliente() {
+        return apellidoCliente;
+    }
+
+    public void setApellidoCliente(String apellidoCliente) {
+        this.apellidoCliente = apellidoCliente;
+    }
+
+    public String getDniCliente() {
+        return dniCliente;
+    }
+
+    public void setDniCliente(String dniCliente) {
+        this.dniCliente = dniCliente;
+    }
+
+    
 }

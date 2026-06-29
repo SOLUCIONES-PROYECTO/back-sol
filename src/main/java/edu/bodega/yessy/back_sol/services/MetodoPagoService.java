@@ -16,7 +16,6 @@ public class MetodoPagoService {
     @Autowired
     private MetodoPagoRepository metodoPagoRepository;
 
-    // ================= LISTAR =================
     public ArrayList<MetodoPagoResponseDTO> listar() {
 
         ArrayList<MetodoPagoResponseDTO> lista = new ArrayList<>();
@@ -28,7 +27,6 @@ public class MetodoPagoService {
         return lista;
     }
 
-    // ================= CREAR =================
     public MetodoPagoResponseDTO nuevo(MetodoPagoRequestDTO dto) {
 
         MetodoPago m = new MetodoPago();
@@ -38,7 +36,6 @@ public class MetodoPagoService {
         return convertirDTO(metodoPagoRepository.save(m));
     }
 
-    // ================= BUSCAR =================
     public MetodoPagoResponseDTO buscar(Integer id) {
 
         MetodoPago m = metodoPagoRepository.findById(id)
@@ -47,7 +44,6 @@ public class MetodoPagoService {
         return convertirDTO(m);
     }
 
-    // ================= ACTUALIZAR =================
     public MetodoPagoResponseDTO actualizar(Integer id, MetodoPagoRequestDTO dto) {
 
         MetodoPago m = metodoPagoRepository.findById(id)
@@ -58,7 +54,6 @@ public class MetodoPagoService {
         return convertirDTO(metodoPagoRepository.save(m));
     }
 
-    // ================= ELIMINAR =================
     public void eliminar(Integer id) {
 
         MetodoPago m = metodoPagoRepository.findById(id)
@@ -67,7 +62,6 @@ public class MetodoPagoService {
         metodoPagoRepository.delete(m);
     }
 
-    // ================= MAPPER =================
     private MetodoPagoResponseDTO convertirDTO(MetodoPago m) {
 
         MetodoPagoResponseDTO dto = new MetodoPagoResponseDTO();

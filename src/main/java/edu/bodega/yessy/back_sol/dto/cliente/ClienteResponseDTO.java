@@ -5,6 +5,8 @@ import java.time.LocalDate;
 
 public class ClienteResponseDTO {
     private Integer idcliente;
+    private Integer idPersona;
+    private String observaciones;
     private String nombre;
     private String apellido;
     private String codigoCliente;
@@ -95,5 +97,22 @@ public class ClienteResponseDTO {
         this.frecuenciaCompra = frecuenciaCompra;
     }
 
+    public Integer getIdPersona() {
+        return idPersona;
+    }
+
+    public void setIdPersona(Integer idPersona) {
+        this.idPersona = idPersona;
+    }
+
+    public String getObservaciones() {
+        return observaciones;
+    }
+
+    public void setObservaciones(String observaciones) {
+        this.observaciones = observaciones;
+    }
+
+    
     
 }

@@ -10,7 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import edu.bodega.yessy.back_sol.models.Persona;
+import edu.bodega.yessy.back_sol.dto.persona.PersonaRequestDTO;
+import edu.bodega.yessy.back_sol.dto.persona.PersonaResponseDTO;
 import edu.bodega.yessy.back_sol.services.PersonaService;
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -19,13 +20,17 @@ import edu.bodega.yessy.back_sol.services.PersonaService;
 public class PersonaController {
 
     @Autowired
-    PersonaService personaService;
+    private PersonaService personaService;
+
     @GetMapping
-    public ArrayList<Persona> listarPersonas() {
+    public ArrayList<PersonaResponseDTO> listarPersonas() {
         return personaService.listar();
     }
+
     @PostMapping
-    public Persona nuevaPersona(@RequestBody Persona persona) {
-        return personaService.nuevo(persona);
+    public PersonaResponseDTO nuevaPersona(
+            @RequestBody PersonaRequestDTO dto) {
+
+        return personaService.nuevo(dto);
     }
 }

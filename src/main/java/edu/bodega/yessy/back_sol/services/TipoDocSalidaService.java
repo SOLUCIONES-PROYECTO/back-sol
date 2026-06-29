@@ -16,7 +16,6 @@ public class TipoDocSalidaService {
     @Autowired
     private TipoDocSalidaRepository tipoDocSalidaRepository;
 
-    // ================= LISTAR =================
     public ArrayList<TipoDocSalidaResponseDTO> listar() {
 
         ArrayList<TipoDocSalidaResponseDTO> lista = new ArrayList<>();
@@ -28,7 +27,6 @@ public class TipoDocSalidaService {
         return lista;
     }
 
-    // ================= CREAR =================
     public TipoDocSalidaResponseDTO nuevo(TipoDocSalidaRequestDTO dto) {
 
         TipoDocSalida t = new TipoDocSalida();
@@ -39,7 +37,6 @@ public class TipoDocSalidaService {
         return convertirDTO(tipoDocSalidaRepository.save(t));
     }
 
-    // ================= BUSCAR =================
     public TipoDocSalidaResponseDTO buscar(Integer id) {
 
         TipoDocSalida t = tipoDocSalidaRepository.findById(id)
@@ -48,7 +45,6 @@ public class TipoDocSalidaService {
         return convertirDTO(t);
     }
 
-    // ================= ACTUALIZAR =================
     public TipoDocSalidaResponseDTO actualizar(Integer id, TipoDocSalidaRequestDTO dto) {
 
         TipoDocSalida t = tipoDocSalidaRepository.findById(id)
@@ -60,7 +56,6 @@ public class TipoDocSalidaService {
         return convertirDTO(tipoDocSalidaRepository.save(t));
     }
 
-    // ================= ELIMINAR =================
     public void eliminar(Integer id) {
 
         TipoDocSalida t = tipoDocSalidaRepository.findById(id)
@@ -69,7 +64,6 @@ public class TipoDocSalidaService {
         tipoDocSalidaRepository.delete(t);
     }
 
-    // ================= MAPPER =================
     private TipoDocSalidaResponseDTO convertirDTO(TipoDocSalida t) {
 
         TipoDocSalidaResponseDTO dto = new TipoDocSalidaResponseDTO();

@@ -1,16 +1,20 @@
 package edu.bodega.yessy.back_sol.services;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.bodega.yessy.back_sol.dto.producto.ProductoRequestDTO;
 import edu.bodega.yessy.back_sol.dto.producto.ProductoResponseDTO;
+import edu.bodega.yessy.back_sol.models.DetalleEntrada;
 import edu.bodega.yessy.back_sol.models.EstadoProducto;
 import edu.bodega.yessy.back_sol.models.Producto;
 import edu.bodega.yessy.back_sol.models.Proveedor;
 import edu.bodega.yessy.back_sol.models.UnidadMedida;
+import edu.bodega.yessy.back_sol.repositories.DetalleEntradaRepository;
 import edu.bodega.yessy.back_sol.repositories.EstadoProductoRepository;
 import edu.bodega.yessy.back_sol.repositories.ProductoRepository;
 import edu.bodega.yessy.back_sol.repositories.ProveedorRepository;
@@ -31,16 +35,19 @@ public class ProductoService {
     @Autowired
     private UnidadMedidaRepository unidadMedidaRepository;
 
+    @Autowired
+    private DetalleEntradaRepository detalleEntradaRepository;
+
     public ArrayList<ProductoResponseDTO> listar() {
 
-        ArrayList<ProductoResponseDTO> lista = new ArrayList<>();
+    ArrayList<ProductoResponseDTO> lista = new ArrayList<>();
 
-        for (Producto producto : productoRepository.findAll()) {
-            lista.add(convertirDTO(producto));
-        }
-
-        return lista;
+    for (Producto producto : productoRepository.findByEstado_NombreNot("Eliminado")) {
+        lista.add(convertirDTO(producto));
     }
+
+    return lista;
+}
 
     public ProductoResponseDTO nuevo(ProductoRequestDTO dto) {
 
@@ -139,24 +146,38 @@ public class ProductoService {
 
     public void eliminar(Integer id) {
 
-        Producto producto = productoRepository
-                .findById(id)
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
+    Producto producto = productoRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 
-        if ("Disponible".equalsIgnoreCase(producto.getEstado().getNombre())) {
-            throw new RuntimeException(
-                    "No se puede eliminar un producto en estado Disponible. Cambia su estado a 'No Disponible' primero."
-            );
-        }
+    boolean agotado = producto.getStockActual() == 0;
+    boolean vencido = estaCompletamenteVencido(id);
 
-        try {
-            productoRepository.delete(producto);
-        } catch (org.springframework.dao.DataIntegrityViolationException e) {
-            throw new RuntimeException(
-                    "No se puede eliminar este producto porque ya tiene movimientos registrados (ventas/salidas)."
-            );
-        }
+    if (!agotado && !vencido) {
+        throw new RuntimeException(
+            "Solo se pueden eliminar productos agotados (stock en 0) o con todos sus lotes vencidos."
+        );
     }
+
+    EstadoProducto estadoEliminado = estadoProductoRepository.findByNombre("Eliminado")
+            .orElseThrow(() -> new RuntimeException(
+                "No existe el estado 'Eliminado'. Crea ese registro en estado_producto antes de continuar."));
+
+    producto.setEstado(estadoEliminado);
+    productoRepository.save(producto); // UPDATE, no DELETE — por eso ya no choca con detalle_entrada/detalle_salida
+}
+
+private boolean estaCompletamenteVencido(Integer idProducto) {
+
+    List<DetalleEntrada> lotes = detalleEntradaRepository.findByProducto_Idproducto(idProducto);
+
+    if (lotes.isEmpty()) {
+        return false; // sin lotes registrados, no podemos afirmar que está vencido
+    }
+
+    LocalDate hoy = LocalDate.now();
+
+    return lotes.stream().allMatch(l -> l.getFechavencimiento().isBefore(hoy));
+}
 
     private ProductoResponseDTO convertirDTO(Producto producto) {
 

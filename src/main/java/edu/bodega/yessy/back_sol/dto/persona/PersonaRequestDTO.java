@@ -1,109 +1,66 @@
 package edu.bodega.yessy.back_sol.dto.persona;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class PersonaRequestDTO {
-    private Integer idPersona;
+    private String nombre;
+    private String apellido;
+    private String dni;
+    private String telefono;
+    private String correo;
+    private String direccion;
 
-    private String codigoCliente;
-
-    private LocalDateTime fechaRegistro;
-
-    private String estado;
-
-    private String tipoCliente;
-
-    private BigDecimal limiteCredito;
-
-    private String observaciones;
-
-    private String categoriaCliente;
-
-    private LocalDate fechaUltimaCompra;
-
-    private String frecuenciaCompra;
-
-    public Integer getIdPersona() {
-        return idPersona;
+    private LocalDate fechaNacimiento;
+    private String genero;
+    public String getNombre() {
+        return nombre;
+    }
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    public String getApellido() {
+        return apellido;
+    }
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+    public String getDni() {
+        return dni;
+    }
+    public void setDni(String dni) {
+        this.dni = dni;
+    }
+    public String getTelefono() {
+        return telefono;
+    }
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+    public String getCorreo() {
+        return correo;
+    }
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+    public String getDireccion() {
+        return direccion;
+    }
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+    public LocalDate getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+    public void setFechaNacimiento(LocalDate fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+    public String getGenero() {
+        return genero;
+    }
+    public void setGenero(String genero) {
+        this.genero = genero;
     }
 
-    public void setIdPersona(Integer idPersona) {
-        this.idPersona = idPersona;
-    }
-
-    public String getCodigoCliente() {
-        return codigoCliente;
-    }
-
-    public void setCodigoCliente(String codigoCliente) {
-        this.codigoCliente = codigoCliente;
-    }
-
-    public LocalDateTime getFechaRegistro() {
-        return fechaRegistro;
-    }
-
-    public void setFechaRegistro(LocalDateTime fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
-    }
-
-    public String getEstado() {
-        return estado;
-    }
-
-    public void setEstado(String estado) {
-        this.estado = estado;
-    }
-
-    public String getTipoCliente() {
-        return tipoCliente;
-    }
-
-    public void setTipoCliente(String tipoCliente) {
-        this.tipoCliente = tipoCliente;
-    }
-
-    public BigDecimal getLimiteCredito() {
-        return limiteCredito;
-    }
-
-    public void setLimiteCredito(BigDecimal limiteCredito) {
-        this.limiteCredito = limiteCredito;
-    }
-
-    public String getObservaciones() {
-        return observaciones;
-    }
-
-    public void setObservaciones(String observaciones) {
-        this.observaciones = observaciones;
-    }
-
-    public String getCategoriaCliente() {
-        return categoriaCliente;
-    }
-
-    public void setCategoriaCliente(String categoriaCliente) {
-        this.categoriaCliente = categoriaCliente;
-    }
-
-    public LocalDate getFechaUltimaCompra() {
-        return fechaUltimaCompra;
-    }
-
-    public void setFechaUltimaCompra(LocalDate fechaUltimaCompra) {
-        this.fechaUltimaCompra = fechaUltimaCompra;
-    }
-
-    public String getFrecuenciaCompra() {
-        return frecuenciaCompra;
-    }
-
-    public void setFrecuenciaCompra(String frecuenciaCompra) {
-        this.frecuenciaCompra = frecuenciaCompra;
-    }
-
+    
     
 }

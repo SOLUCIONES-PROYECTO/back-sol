@@ -1,5 +1,8 @@
 package edu.bodega.yessy.back_sol.services;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,7 @@ public class ClienteService {
     private PersonaRepository personaRepository;
 
     public ClienteResponseDTO nuevo(ClienteRequestDTO dto) {
+
         Persona persona = personaRepository
                 .findById(dto.getIdPersona())
                 .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
@@ -30,8 +34,12 @@ public class ClienteService {
 
         cliente.setPersona(persona);
         cliente.setCodigoCliente(dto.getCodigoCliente());
+        cliente.setFechaRegistro(LocalDateTime.now());
+
         cliente.setEstado(dto.getEstado());
         cliente.setTipoCliente(dto.getTipoCliente());
+        cliente.setLimiteCredito(dto.getLimiteCredito());
+        cliente.setObservaciones(dto.getObservaciones());
         cliente.setCategoriaCliente(dto.getCategoriaCliente());
         cliente.setFechaUltimaCompra(dto.getFechaUltimaCompra());
         cliente.setFrecuenciaCompra(dto.getFrecuenciaCompra());
@@ -54,6 +62,8 @@ public class ClienteService {
                 cliente.getPersona().getApellido());
 
         dto.setCodigoCliente(cliente.getCodigoCliente());
+        dto.setIdPersona(cliente.getPersona().getIdpersona());
+        dto.setObservaciones(cliente.getObservaciones());
 
         dto.setEstado(cliente.getEstado());
 
@@ -90,53 +100,89 @@ public class ClienteService {
         return convertirDTO(cliente);
     }
 
-    public void eliminar(Integer id){
+    public void eliminar(Integer id) {
         Cliente cliente = clienteRepository
-            .findById(id)
-            .orElseThrow(() ->
-                    new RuntimeException("Cliente no encontrado"));
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
 
         clienteRepository.delete(cliente);
     }
 
     public ClienteResponseDTO actualizar(
-        Integer id,
-        ClienteRequestDTO dto) {
+            Integer id,
+            ClienteRequestDTO dto) {
 
-    Cliente cliente = clienteRepository
-            .findById(id)
-            .orElseThrow(() ->
-                    new RuntimeException("Cliente no encontrado"));
+        Cliente cliente = clienteRepository
+                .findById(id)
+                .orElseThrow(() -> new RuntimeException("Cliente no encontrado"));
 
-    Persona persona = personaRepository
-            .findById(dto.getIdPersona())
-            .orElseThrow(() ->
-                    new RuntimeException("Persona no encontrada"));
+        Persona persona = personaRepository
+                .findById(dto.getIdPersona())
+                .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
 
-    cliente.setPersona(persona);
+        cliente.setPersona(persona);
+        cliente.setCodigoCliente(dto.getCodigoCliente());
+        cliente.setEstado(dto.getEstado());
+        cliente.setTipoCliente(dto.getTipoCliente());
+        cliente.setLimiteCredito(dto.getLimiteCredito());
+        cliente.setObservaciones(dto.getObservaciones());
+        cliente.setCategoriaCliente(dto.getCategoriaCliente());
+        cliente.setFechaUltimaCompra(dto.getFechaUltimaCompra());
+        cliente.setFrecuenciaCompra(dto.getFrecuenciaCompra());
 
-    cliente.setCodigoCliente(dto.getCodigoCliente());
+        Cliente actualizado = clienteRepository.save(cliente);
 
-    cliente.setFechaRegistro(dto.getFechaRegistro());
+        return convertirDTO(actualizado);
+    }
 
-    cliente.setEstado(dto.getEstado());
+    public Cliente buscarOCrearPorDni(String nombre, String apellido, String dni) {
 
-    cliente.setTipoCliente(dto.getTipoCliente());
+        Persona persona = personaRepository.findByDni(dni)
+                .orElseGet(() -> {
+                    Persona nueva = new Persona();
+                    nueva.setNombre(nombre);
+                    nueva.setApellido(apellido);
+                    nueva.setDni(dni);
+                    nueva.setFechaRegistro(LocalDateTime.now());
+                    return personaRepository.save(nueva);
+                });
 
-    cliente.setLimiteCredito(dto.getLimiteCredito());
+        return clienteRepository.findByPersona_Idpersona(persona.getIdpersona())
+                .orElseGet(() -> crearClientePorDefecto(persona, "CLI-" + persona.getIdpersona(), "Ocasional"));
+    }
 
-    cliente.setObservaciones(dto.getObservaciones());
+    public Cliente obtenerClienteCentinela() {
 
-    cliente.setCategoriaCliente(dto.getCategoriaCliente());
+        final String dniCentinela = "00000000";
 
-    cliente.setFechaUltimaCompra(dto.getFechaUltimaCompra());
+        Persona persona = personaRepository.findByDni(dniCentinela)
+                .orElseGet(() -> {
+                    Persona nueva = new Persona();
+                    nueva.setNombre("Consumo");
+                    nueva.setApellido("Interno");
+                    nueva.setDni(dniCentinela);
+                    nueva.setFechaRegistro(LocalDateTime.now());
+                    return personaRepository.save(nueva);
+                });
 
-    cliente.setFrecuenciaCompra(dto.getFrecuenciaCompra());
+        return clienteRepository.findByPersona_Idpersona(persona.getIdpersona())
+                .orElseGet(() -> crearClientePorDefecto(persona, "CLI-INTERNO", "Interno"));
+    }
 
-    Cliente actualizado = clienteRepository.save(cliente);
+    private Cliente crearClientePorDefecto(Persona persona, String codigoCliente, String tipoCliente) {
 
-    return convertirDTO(actualizado);
-}
+        Cliente cliente = new Cliente();
+        cliente.setPersona(persona);
+        cliente.setCodigoCliente(codigoCliente);
+        cliente.setFechaRegistro(LocalDateTime.now());
+        cliente.setEstado("Activo");
+        cliente.setTipoCliente(tipoCliente);
+        cliente.setLimiteCredito(BigDecimal.ZERO);
+        cliente.setCategoriaCliente("Regular");
+        cliente.setFechaUltimaCompra(LocalDate.now());
+        cliente.setFrecuenciaCompra("N/A");
 
-    
+        return clienteRepository.save(cliente);
+    }
+
 }

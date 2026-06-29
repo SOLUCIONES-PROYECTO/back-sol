@@ -27,19 +27,19 @@ public class Persona {
     @Column (name = "dni", nullable = false, unique = true, length = 8)
     private String dni;
 
-    @Column (name = "direccion", nullable = false)
+    @Column (name = "direccion", nullable = true)
     private String direccion;
 
-    @Column (name = "fecha_nacimiento", nullable = false)
+    @Column (name = "fecha_nacimiento", nullable = true)
     private LocalDate fechaNacimiento;
 
-    @Column (name = "telefono", nullable = false)
+    @Column (name = "telefono", nullable = true)
     private String telefono;
 
-    @Column (name = "correo", nullable = false)
+    @Column (name = "correo", nullable = true)
     private String correo;
 
-    @Column (name = "genero", nullable = false)
+    @Column (name = "genero", nullable = true)
     private String genero;
 
     @Column (name = "fecha_registro", nullable = false)

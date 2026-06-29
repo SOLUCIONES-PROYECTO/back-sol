@@ -10,7 +10,6 @@ import edu.bodega.yessy.back_sol.dto.detalleusointerno.DetalleUsoInternoResponse
 import edu.bodega.yessy.back_sol.models.AreaUsoInterno;
 import edu.bodega.yessy.back_sol.models.DetalleSalida;
 import edu.bodega.yessy.back_sol.models.DetalleUsoInterno;
-import edu.bodega.yessy.back_sol.models.Producto;
 import edu.bodega.yessy.back_sol.repositories.AreaUsoInternoRepository;
 import edu.bodega.yessy.back_sol.repositories.DetalleSalidaRepository;
 import edu.bodega.yessy.back_sol.repositories.DetalleUsoInternoRepository;
@@ -51,17 +50,6 @@ public class DetalleUsoInternoService {
 
         AreaUsoInterno area = areaUsoInternoRepository.findById(dto.getIdAreaUsoInterno())
                 .orElseThrow(() -> new RuntimeException("Área de uso interno no encontrada"));
-
-        Producto producto = detalleSalida.getProducto();
-
-        // 🔥 VALIDACIÓN DE STOCK
-        if (producto.getStockActual() < 1) {
-            throw new RuntimeException("Stock insuficiente para uso interno");
-        }
-
-        // 🔥 DESCUENTO DE STOCK (USO INTERNO)
-        producto.setStockActual(producto.getStockActual() - 1);
-        productoRepository.save(producto);
 
         DetalleUsoInterno e = new DetalleUsoInterno();
 

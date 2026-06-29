@@ -2,25 +2,15 @@ package edu.bodega.yessy.back_sol.dto.cliente;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class ClienteRequestDTO {
     private Integer idPersona;
-
     private String codigoCliente;
-
-    private LocalDateTime fechaRegistro;
-
     private String estado;
-
     private String tipoCliente;
-
     private BigDecimal limiteCredito;
-
     private String observaciones;
-
     private String categoriaCliente;
-
     private LocalDate fechaUltimaCompra;
 
     private String frecuenciaCompra;
@@ -39,14 +29,6 @@ public class ClienteRequestDTO {
 
     public void setCodigoCliente(String codigoCliente) {
         this.codigoCliente = codigoCliente;
-    }
-
-    public LocalDateTime getFechaRegistro() {
-        return fechaRegistro;
-    }
-
-    public void setFechaRegistro(LocalDateTime fechaRegistro) {
-        this.fechaRegistro = fechaRegistro;
     }
 
     public String getEstado() {
