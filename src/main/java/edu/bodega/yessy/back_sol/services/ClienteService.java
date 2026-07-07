@@ -169,6 +169,25 @@ public class ClienteService {
                 .orElseGet(() -> crearClientePorDefecto(persona, "CLI-INTERNO", "Interno"));
     }
 
+    public Cliente obtenerClienteProductoVencido() {
+
+    final String dniProductoVencido = "00000001"; // distinto al centinela (00000000)
+
+    Persona persona = personaRepository.findByDni(dniProductoVencido)
+            .orElseGet(() -> {
+                Persona nueva = new Persona();
+                nueva.setNombre("Producto");
+                nueva.setApellido("Vencido");
+                nueva.setDni(dniProductoVencido);
+                nueva.setFechaRegistro(LocalDateTime.now());
+                return personaRepository.save(nueva);
+            });
+
+    return clienteRepository.findByPersona_Idpersona(persona.getIdpersona())
+            .orElseGet(() -> crearClientePorDefecto(persona, "CLI-MERMA", "Merma"));
+}
+
+
     private Cliente crearClientePorDefecto(Persona persona, String codigoCliente, String tipoCliente) {
 
         Cliente cliente = new Cliente();

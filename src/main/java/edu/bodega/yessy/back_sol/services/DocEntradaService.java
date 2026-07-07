@@ -1,6 +1,7 @@
 package edu.bodega.yessy.back_sol.services;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -89,7 +90,7 @@ public class DocEntradaService {
     docEntrada.setEstadoIngreso(estadoIngreso);
     docEntrada.setEmpleado(empleado);
     docEntrada.setProveedor(proveedor);
-    docEntrada.setNumeroDocumento(dto.getNumeroDocumento());
+    docEntrada.setNumeroDocumento(generarNumeroDocumento(tipo));
     docEntrada.setFecha_ingreso(dto.getFechaIngreso());
     docEntrada.setIncidencias(dto.getIncidencias());
     docEntrada.setPrecioTotal(dto.getPrecioTotal());
@@ -183,4 +184,18 @@ public class DocEntradaService {
     dto.setPrecioTotal(docEntrada.getPrecioTotal());
     return dto;
     }
+
+    // ================= HELPERS PRIVADOS =================
+private static final Map<String, String> PREFIJOS_ENTRADA = Map.of(
+    "NEA", "NEA",
+    "Factura", "FAC",
+    "Guia", "GUIA"
+);
+
+private String generarNumeroDocumento(TipoDocEntrada tipo) {
+    String prefijo = PREFIJOS_ENTRADA.getOrDefault(tipo.getNombre(), "DOC");
+    long correlativo = docEntradaRepository
+            .countByTipoDocEntrada_Idtipodocentrada(tipo.getIdtipodocentrada()) + 1;
+    return prefijo + "-" + String.format("%04d", correlativo);
+}
 }
