@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,5 +34,18 @@ public class PersonaController {
             @RequestBody PersonaRequestDTO dto) {
 
         return personaService.nuevo(dto);
+    }
+
+    @GetMapping("/{id}")
+    public PersonaResponseDTO buscarPersona(@PathVariable Integer id) {
+        return personaService.buscarPorId(id);
+    }
+
+    @PutMapping("/{id}")
+    public PersonaResponseDTO actualizarPersona(
+            @PathVariable Integer id,
+            @RequestBody PersonaRequestDTO dto) {
+
+        return personaService.actualizar(id, dto);
     }
 }

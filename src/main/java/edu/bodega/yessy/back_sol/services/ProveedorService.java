@@ -32,21 +32,18 @@ public class ProveedorService {
     }
 
     public ProveedorResponseDTO nuevo(ProveedorRequestDTO dto) {
-        Persona persona = personaRepository
-                .findById(dto.getIdPersona())
-                .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
-
+        Persona persona = obtenerPersonaCentinela();
         Proveedor proveedor = new Proveedor();
-
+        
         proveedor.setPersona(persona);
         proveedor.setRUC(dto.getRuc());
         proveedor.setDescripcion(dto.getDescripcion());
-        proveedor.setCodigoUbigeo(dto.getCodigoUbigeo());
+        proveedor.setCodigoUbigeo(dto.getCodigoUbigeo() != null ? dto.getCodigoUbigeo() : "");
         proveedor.setDireccion(dto.getDireccion());
         proveedor.setDepartamento(dto.getDepartamento());
         proveedor.setCiudad(dto.getCiudad());
         proveedor.setDistrito(dto.getDistrito());
-        proveedor.setCodigoPostal(dto.getCodigoPostal());
+        proveedor.setCodigoPostal(dto.getCodigoPostal() != null ? dto.getCodigoPostal() : "");
         proveedor.setReferenciaUbicacion(dto.getReferenciaUbicacion());
         proveedor.setCorreoEmpresa(dto.getCorreoEmpresa());
         proveedor.setTelefonoEmpresa(dto.getTelefonoEmpresa());
@@ -58,13 +55,11 @@ public class ProveedorService {
         proveedor.setTelefonoFijoSectorista(dto.getTelefonoFijoSectorista());
         proveedor.setEtiquetas(dto.getEtiquetas());
         proveedor.setIncidencias(dto.getIncidencias());
-        proveedor.setCondicionesPago(dto.getCondicionesPago());
-        proveedor.setCalificacion(dto.getCalificacion());
-        proveedor.setFechaRegistro(dto.getFechaRegistro());
+        proveedor.setCondicionesPago(dto.getCondicionesPago() != null ? dto.getCondicionesPago() : "");
+        proveedor.setCalificacion(dto.getCalificacion() != null ? dto.getCalificacion() : "");
+        proveedor.setFechaRegistro(java.time.LocalDateTime.now()); // 👈 siempre automático
 
-        Proveedor guardado = proveedorRepository.save(proveedor);
-
-        return convertirDTO(guardado);
+        return convertirDTO(proveedorRepository.save(proveedor));
     }
 
     public ProveedorResponseDTO buscar(Integer id) {
@@ -76,23 +71,20 @@ public class ProveedorService {
     }
 
     public ProveedorResponseDTO actualizar(Integer id, ProveedorRequestDTO dto) {
+
         Proveedor proveedor = proveedorRepository
                 .findById(id)
                 .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
 
-        Persona persona = personaRepository
-                .findById(dto.getIdPersona())
-                .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
-
-        proveedor.setPersona(persona);
+        // No tocamos persona — siempre queda la centinela que ya tiene asignada
         proveedor.setRUC(dto.getRuc());
         proveedor.setDescripcion(dto.getDescripcion());
-        proveedor.setCodigoUbigeo(dto.getCodigoUbigeo());
+        proveedor.setCodigoUbigeo(dto.getCodigoUbigeo() != null ? dto.getCodigoUbigeo() : "");
         proveedor.setDireccion(dto.getDireccion());
         proveedor.setDepartamento(dto.getDepartamento());
         proveedor.setCiudad(dto.getCiudad());
         proveedor.setDistrito(dto.getDistrito());
-        proveedor.setCodigoPostal(dto.getCodigoPostal());
+        proveedor.setCodigoPostal(dto.getCodigoPostal() != null ? dto.getCodigoPostal() : "");
         proveedor.setReferenciaUbicacion(dto.getReferenciaUbicacion());
         proveedor.setCorreoEmpresa(dto.getCorreoEmpresa());
         proveedor.setTelefonoEmpresa(dto.getTelefonoEmpresa());
@@ -104,13 +96,11 @@ public class ProveedorService {
         proveedor.setTelefonoFijoSectorista(dto.getTelefonoFijoSectorista());
         proveedor.setEtiquetas(dto.getEtiquetas());
         proveedor.setIncidencias(dto.getIncidencias());
-        proveedor.setCondicionesPago(dto.getCondicionesPago());
-        proveedor.setCalificacion(dto.getCalificacion());
-        proveedor.setFechaRegistro(dto.getFechaRegistro());
+        proveedor.setCondicionesPago(dto.getCondicionesPago() != null ? dto.getCondicionesPago() : "");
+        proveedor.setCalificacion(dto.getCalificacion() != null ? dto.getCalificacion() : "");
+        // fechaRegistro no se actualiza — conserva la fecha original de creación
 
-        Proveedor actualizado = proveedorRepository.save(proveedor);
-
-        return convertirDTO(actualizado);
+        return convertirDTO(proveedorRepository.save(proveedor));
     }
 
     public void eliminar(Integer id) {
@@ -121,6 +111,7 @@ public class ProveedorService {
         proveedorRepository.delete(proveedor);
     }
 
+    // ================= convertirDTO — agrega los campos nuevos =================
     private ProveedorResponseDTO convertirDTO(Proveedor proveedor) {
         ProveedorResponseDTO dto = new ProveedorResponseDTO();
 
@@ -130,22 +121,43 @@ public class ProveedorService {
         dto.setApellido(proveedor.getPersona().getApellido());
         dto.setRuc(proveedor.getRUC());
         dto.setDescripcion(proveedor.getDescripcion());
+        dto.setCodigoUbigeo(proveedor.getCodigoUbigeo()); 
         dto.setDireccion(proveedor.getDireccion());
         dto.setDepartamento(proveedor.getDepartamento());
         dto.setCiudad(proveedor.getCiudad());
         dto.setDistrito(proveedor.getDistrito());
         dto.setCodigoPostal(proveedor.getCodigoPostal());
+        dto.setReferenciaUbicacion(proveedor.getReferenciaUbicacion()); 
         dto.setCorreoEmpresa(proveedor.getCorreoEmpresa());
         dto.setTelefonoEmpresa(proveedor.getTelefonoEmpresa());
+        dto.setTelefonoFijoEmpresa(proveedor.getTelefonoFijoEmpresa()); 
         dto.setPaginaWeb(proveedor.getPaginaWeb());
         dto.setNombreSectorista(proveedor.getNombreSectorista());
         dto.setCorreoSectorista(proveedor.getCorreoSectorista());
         dto.setCelularSectorista(proveedor.getCelularSectorista());
+        dto.setTelefonoFijoSectorista(proveedor.getTelefonoFijoSectorista()); 
+        dto.setEtiquetas(proveedor.getEtiquetas());
+        dto.setIncidencias(proveedor.getIncidencias()); 
         dto.setCondicionesPago(proveedor.getCondicionesPago());
         dto.setCalificacion(proveedor.getCalificacion());
         dto.setFechaRegistro(proveedor.getFechaRegistro());
 
         return dto;
+    }
+
+    // ================= HELPER: obtener persona centinela =================
+    private Persona obtenerPersonaCentinela() {
+        final String dniCentinela = "00000001"; // distinto al de cliente (00000000)
+
+        return personaRepository.findByDni(dniCentinela)
+                .orElseGet(() -> {
+                    Persona nueva = new Persona();
+                    nueva.setNombre("Empresa");
+                    nueva.setApellido("Proveedora");
+                    nueva.setDni(dniCentinela);
+                    nueva.setFechaRegistro(java.time.LocalDateTime.now());
+                    return personaRepository.save(nueva);
+                });
     }
 
 }

@@ -7,6 +7,9 @@ import java.time.LocalDateTime;
 public class DocSalidaResponseDTO {
 
     private Integer iddocsalida;
+    private Integer idTipoDocSalida;
+    private Integer idMetodoPago;
+    private Integer idEmpleado;
     private String tipoDocSalida;
     private String cliente;
     private String empleado;
@@ -96,4 +99,30 @@ public class DocSalidaResponseDTO {
     public void setMetodoPago(String metodoPago) {
         this.metodoPago = metodoPago;
     }
+
+    public Integer getIdTipoDocSalida() {
+        return idTipoDocSalida;
+    }
+
+    public void setIdTipoDocSalida(Integer idTipoDocSalida) {
+        this.idTipoDocSalida = idTipoDocSalida;
+    }
+
+    public Integer getIdMetodoPago() {
+        return idMetodoPago;
+    }
+
+    public void setIdMetodoPago(Integer idMetodoPago) {
+        this.idMetodoPago = idMetodoPago;
+    }
+
+    public Integer getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(Integer idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
+
+    
 }
