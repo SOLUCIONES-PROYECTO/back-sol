@@ -21,8 +21,7 @@ public class EmpleadoService {
 
     public EmpleadoService(
             EmpleadoRepository empleadoRepository,
-            PersonaRepository personaRepository
-    ) {
+            PersonaRepository personaRepository) {
         this.empleadoRepository = empleadoRepository;
         this.personaRepository = personaRepository;
     }
@@ -80,16 +79,14 @@ public class EmpleadoService {
         empleado.setFechaRegistro(LocalDateTime.now());
 
         return convertirDTO(
-                empleadoRepository.save(empleado)
-        );
+                empleadoRepository.save(empleado));
     }
 
     // ================= ACTUALIZAR =================
     @Transactional
     public EmpleadoResponseDTO actualizar(
             Integer id,
-            EmpleadoRequestDTO dto
-    ) {
+            EmpleadoRequestDTO dto) {
 
         Empleado empleado = empleadoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
@@ -112,8 +109,7 @@ public class EmpleadoService {
         empleado.setSupervisorDirecto(dto.getSupervisorDirecto());
 
         return convertirDTO(
-                empleadoRepository.save(empleado)
-        );
+                empleadoRepository.save(empleado));
     }
 
     // ================= ELIMINAR =================
@@ -123,7 +119,8 @@ public class EmpleadoService {
         Empleado empleado = empleadoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
 
-        empleadoRepository.delete(empleado);
+        empleado.setEstado("Inactivo");
+        empleadoRepository.save(empleado);
     }
 
     // ================= MAPPER =================

@@ -112,12 +112,12 @@ public class AuthService {
         empleado.setCargo(request.getCargo());
         empleado.setArea(request.getArea());
         empleado.setFechaContratacion(LocalDate.now());
-        empleado.setEstado("ACTIVO");
+        empleado.setEstado("Activo");
         empleado.setUsuarioSistema(request.getUsuarioSistema());
-        empleado.setRol("EMPLEADO");
+        empleado.setRol("Empleado");
         empleado.setFechaRegistro(LocalDateTime.now());
         empleado.setTurnoTrabajo("Mañana");
-        empleado.setSupervisorDirecto("Sin supervisor");
+        empleado.setSupervisorDirecto("Maria Perez");
 
         String passwordHash = passwordEncoder.encode(request.getPassword());
         empleado.setContrasena(passwordHash);

@@ -5,25 +5,31 @@ import java.time.LocalDateTime;
 public class ProveedorResponseDTO {
 
 	private Integer idProveedor;
-	private Integer idPersona;
-	private String nombre;
-	private String apellido;
-	private String ruc;
-	private String descripcion;
-	private String direccion;
-	private String departamento;
-	private String ciudad;
-	private String distrito;
-	private String codigoPostal;
-	private String correoEmpresa;
-	private String telefonoEmpresa;
-	private String paginaWeb;
-	private String nombreSectorista;
-	private String correoSectorista;
-	private String celularSectorista;
-	private String condicionesPago;
-	private String calificacion;
-	private LocalDateTime fechaRegistro;
+    private Integer idPersona;
+    private String nombre;
+    private String apellido;
+    private String ruc;
+    private String descripcion;
+    private String codigoUbigeo;      
+    private String direccion;
+    private String departamento;
+    private String ciudad;
+    private String distrito;
+    private String codigoPostal;
+    private String referenciaUbicacion;
+    private String correoEmpresa;
+    private String telefonoEmpresa;
+    private String telefonoFijoEmpresa; 
+    private String paginaWeb;
+    private String nombreSectorista;
+    private String correoSectorista;
+    private String celularSectorista;
+    private String telefonoFijoSectorista;
+    private String etiquetas;          
+    private String incidencias;     
+    private String condicionesPago;
+    private String calificacion;
+    private LocalDateTime fechaRegistro;
 
 	public Integer getIdProveedor() {
 		return idProveedor;
@@ -184,5 +190,55 @@ public class ProveedorResponseDTO {
 	public void setFechaRegistro(LocalDateTime fechaRegistro) {
 		this.fechaRegistro = fechaRegistro;
 	}
+
+	public String getCodigoUbigeo() {
+		return codigoUbigeo;
+	}
+
+	public void setCodigoUbigeo(String codigoUbigeo) {
+		this.codigoUbigeo = codigoUbigeo;
+	}
+
+	public String getReferenciaUbicacion() {
+		return referenciaUbicacion;
+	}
+
+	public void setReferenciaUbicacion(String referenciaUbicacion) {
+		this.referenciaUbicacion = referenciaUbicacion;
+	}
+
+	public String getTelefonoFijoEmpresa() {
+		return telefonoFijoEmpresa;
+	}
+
+	public void setTelefonoFijoEmpresa(String telefonoFijoEmpresa) {
+		this.telefonoFijoEmpresa = telefonoFijoEmpresa;
+	}
+
+	public String getTelefonoFijoSectorista() {
+		return telefonoFijoSectorista;
+	}
+
+	public void setTelefonoFijoSectorista(String telefonoFijoSectorista) {
+		this.telefonoFijoSectorista = telefonoFijoSectorista;
+	}
+
+	public String getEtiquetas() {
+		return etiquetas;
+	}
+
+	public void setEtiquetas(String etiquetas) {
+		this.etiquetas = etiquetas;
+	}
+
+	public String getIncidencias() {
+		return incidencias;
+	}
+
+	public void setIncidencias(String incidencias) {
+		this.incidencias = incidencias;
+	}
+
+	
 
 }

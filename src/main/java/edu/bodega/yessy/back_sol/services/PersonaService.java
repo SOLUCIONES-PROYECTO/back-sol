@@ -69,4 +69,32 @@ public class PersonaService {
 
         return dto;
     }
+
+    public PersonaResponseDTO buscarPorId(Integer id) {
+
+    Persona persona = personaRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
+
+    return convertirDTO(persona);
+}
+
+public PersonaResponseDTO actualizar(Integer id, PersonaRequestDTO dto) {
+
+    Persona persona = personaRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Persona no encontrada"));
+
+    persona.setNombre(dto.getNombre());
+    persona.setApellido(dto.getApellido());
+    persona.setDni(dto.getDni());
+    persona.setTelefono(dto.getTelefono());
+    persona.setCorreo(dto.getCorreo());
+    persona.setDireccion(dto.getDireccion());
+
+    persona.setFechaNacimiento(dto.getFechaNacimiento());
+    persona.setGenero(dto.getGenero());
+
+    Persona actualizado = personaRepository.save(persona);
+
+    return convertirDTO(actualizado);
+}
 }
