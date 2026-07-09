@@ -44,7 +44,9 @@ public class DocSalidaService {
                 ArrayList<DocSalidaResponseDTO> lista = new ArrayList<>();
 
                 for (DocSalida docSalida : docSalidaRepository.findAll()) {
-                        lista.add(convertirDTO(docSalida));
+                        if (Boolean.TRUE.equals(docSalida.getActivo())) {
+                                lista.add(convertirDTO(docSalida));
+                        }
                 }
 
                 return lista;
@@ -90,7 +92,6 @@ public class DocSalidaService {
                 docSalida.setDescripcion(dto.getDescripcion());
                 docSalida.setTotalSalida(dto.getTotalSalida());
                 docSalida.setMetodoPago(metodoPago);
-                
 
                 DocSalida guardado = docSalidaRepository.save(docSalida);
 
@@ -153,34 +154,36 @@ public class DocSalidaService {
         }
 
         public void eliminar(Integer id) {
+
                 DocSalida docSalida = docSalidaRepository
                                 .findById(id)
                                 .orElseThrow(() -> new RuntimeException("DocSalida no encontrado"));
 
-                docSalidaRepository.delete(docSalida);
+                docSalida.setActivo(false);
+                docSalidaRepository.save(docSalida);
         }
 
         private DocSalidaResponseDTO convertirDTO(DocSalida docSalida) {
-        DocSalidaResponseDTO dto = new DocSalidaResponseDTO();
+                DocSalidaResponseDTO dto = new DocSalidaResponseDTO();
 
-        dto.setIddocsalida(docSalida.getIddocsalida());
-        dto.setTipoDocSalida(docSalida.getTipoDocSalida().getNombre());
-        dto.setIdTipoDocSalida(docSalida.getTipoDocSalida().getIdtipodocsalida());
-        dto.setCliente(docSalida.getCliente().getPersona().getNombre() + " "
-                        + docSalida.getCliente().getPersona().getApellido());
-        dto.setEmpleado(docSalida.getEmpleado().getPersona().getNombre() + " "
-                        + docSalida.getEmpleado().getPersona().getApellido());
-        dto.setIdEmpleado(docSalida.getEmpleado().getIdempleado());
-        dto.setNumeroDocumento(docSalida.getNumeroDocumento());
-        dto.setFechaRegistro(docSalida.getFechaRegistro());
-        dto.setFechaEgreso(docSalida.getFechaEgreso());
-        dto.setDescripcion(docSalida.getDescripcion());
-        dto.setTotalSalida(docSalida.getTotalSalida());
-        dto.setMetodoPago(docSalida.getMetodoPago().getNombre());
-        dto.setIdMetodoPago(docSalida.getMetodoPago().getIdmetododepago());
+                dto.setIddocsalida(docSalida.getIddocsalida());
+                dto.setTipoDocSalida(docSalida.getTipoDocSalida().getNombre());
+                dto.setIdTipoDocSalida(docSalida.getTipoDocSalida().getIdtipodocsalida());
+                dto.setCliente(docSalida.getCliente().getPersona().getNombre() + " "
+                                + docSalida.getCliente().getPersona().getApellido());
+                dto.setEmpleado(docSalida.getEmpleado().getPersona().getNombre() + " "
+                                + docSalida.getEmpleado().getPersona().getApellido());
+                dto.setIdEmpleado(docSalida.getEmpleado().getIdempleado());
+                dto.setNumeroDocumento(docSalida.getNumeroDocumento());
+                dto.setFechaRegistro(docSalida.getFechaRegistro());
+                dto.setFechaEgreso(docSalida.getFechaEgreso());
+                dto.setDescripcion(docSalida.getDescripcion());
+                dto.setTotalSalida(docSalida.getTotalSalida());
+                dto.setMetodoPago(docSalida.getMetodoPago().getNombre());
+                dto.setIdMetodoPago(docSalida.getMetodoPago().getIdmetododepago());
 
-        return dto;
-}
+                return dto;
+        }
 
         private static final Map<String, String> PREFIJOS_SALIDA = Map.of(
                         "Venta", "VEN",

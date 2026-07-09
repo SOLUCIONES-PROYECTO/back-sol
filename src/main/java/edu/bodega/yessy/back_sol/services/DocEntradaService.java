@@ -47,15 +47,21 @@ public class DocEntradaService {
     @Autowired
     private ProveedorRepository proveedorRepository;
 
+
+
     public ArrayList<DocEntradaResponseDTO> listar() {
+
     ArrayList<DocEntradaResponseDTO> lista = new ArrayList<>();
 
     for (DocEntrada docEntrada : docEntradaRepository.findAll()) {
-        lista.add(convertirDTO(docEntrada));
+        if (!"Eliminado".equalsIgnoreCase(
+                docEntrada.getEstadoIngreso().getNombre())) {
+            lista.add(convertirDTO(docEntrada));
+        }
     }
 
     return lista;
-    }
+}
 
     public DocEntradaResponseDTO nuevo(DocEntradaRequestDTO dto) {
     TipoDocEntrada tipo = tipoDocEntradaRepository
@@ -154,12 +160,19 @@ public class DocEntradaService {
     }
 
     public void eliminar(Integer id) {
-    DocEntrada docEntrada = docEntradaRepository
-        .findById(id)
-        .orElseThrow(() -> new RuntimeException("DocEntrada no encontrado"));
 
-    docEntradaRepository.delete(docEntrada);
-    }
+    DocEntrada docEntrada = docEntradaRepository
+            .findById(id)
+            .orElseThrow(() -> new RuntimeException("DocEntrada no encontrado"));
+
+    EstadoIngreso estadoEliminado = estadoIngresoRepository
+            .findByNombre("Eliminado")
+            .orElseThrow(() -> new RuntimeException(
+                "No existe el estado 'Eliminado' en estado_ingreso."));
+
+    docEntrada.setEstadoIngreso(estadoEliminado);
+    docEntradaRepository.save(docEntrada);
+}
 
     private DocEntradaResponseDTO convertirDTO(DocEntrada docEntrada) {
     DocEntradaResponseDTO dto = new DocEntradaResponseDTO();

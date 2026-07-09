@@ -79,7 +79,8 @@ public class AuthService {
                 "Bearer",
                 jwtService.getExpirationMs(),
                 empleado.getUsuarioSistema(),
-                empleado.getRol()
+                empleado.getRol(),
+                empleado.getCargo() 
         );
     }
 

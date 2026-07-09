@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.bodega.yessy.back_sol.dto.auth.CambiarContraseñaRequest;
 import edu.bodega.yessy.back_sol.dto.empleado.EmpleadoRequestDTO;
 import edu.bodega.yessy.back_sol.dto.empleado.EmpleadoResponseDTO;
 import edu.bodega.yessy.back_sol.services.EmpleadoService;
@@ -31,8 +32,7 @@ public class EmpleadoController {
     @GetMapping
     public ResponseEntity<List<EmpleadoResponseDTO>> listar() {
         return ResponseEntity.ok(
-                empleadoService.listar()
-        );
+                empleadoService.listar());
     }
 
     @GetMapping("/{id}")
@@ -40,8 +40,7 @@ public class EmpleadoController {
             @PathVariable Integer id) {
 
         return ResponseEntity.ok(
-                empleadoService.buscarPorId(id)
-        );
+                empleadoService.buscarPorId(id));
     }
 
     @PostMapping
@@ -49,8 +48,7 @@ public class EmpleadoController {
             @RequestBody EmpleadoRequestDTO dto) {
 
         return ResponseEntity.ok(
-                empleadoService.guardar(dto)
-        );
+                empleadoService.guardar(dto));
     }
 
     @PutMapping("/{id}")
@@ -59,8 +57,7 @@ public class EmpleadoController {
             @RequestBody EmpleadoRequestDTO dto) {
 
         return ResponseEntity.ok(
-                empleadoService.actualizar(id, dto)
-        );
+                empleadoService.actualizar(id, dto));
     }
 
     @DeleteMapping("/{id}")
@@ -68,6 +65,15 @@ public class EmpleadoController {
             @PathVariable Integer id) {
 
         empleadoService.eliminar(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/contrasena")
+    public ResponseEntity<Void> cambiarContrasena(
+            @PathVariable Integer id,
+            @RequestBody CambiarContraseñaRequest request) {
+
+        empleadoService.cambiarContrasena(id, request.getNuevaContrasena());
         return ResponseEntity.noContent().build();
     }
 }

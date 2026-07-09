@@ -36,21 +36,32 @@ public class DocSalida {
     @Column(name = "numero_documento", nullable = false)
     private String numeroDocumento;
 
-    @Column (name = "fecha_registro", nullable = false)
+    @Column(name = "fecha_registro", nullable = false)
     private LocalDateTime fechaRegistro;
 
     @Column(name = "fecha_egreso", nullable = false)
     private LocalDate fechaEgreso;
 
-    @Column (name = "descripcion")
+    @Column(name = "descripcion")
     private String descripcion;
 
-    @Column (name = "total_salida", nullable = false, precision = 10, scale = 2)
+    @Column(name = "total_salida", nullable = false, precision = 10, scale = 2)
     private BigDecimal totalSalida;
 
     @ManyToOne
     @JoinColumn(name = "id_metodo_pago", nullable = false)
     private MetodoPago metodoPago;
+
+    @Column(name = "activo", nullable = false)
+    private Boolean activo = true;
+
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
 
     public Integer getIddocsalida() {
         return iddocsalida;
@@ -132,5 +143,4 @@ public class DocSalida {
         this.metodoPago = metodoPago;
     }
 
-    
 }

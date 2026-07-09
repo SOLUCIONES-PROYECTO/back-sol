@@ -3,6 +3,8 @@ package edu.bodega.yessy.back_sol.services;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,6 +17,9 @@ import edu.bodega.yessy.back_sol.repositories.PersonaRepository;
 
 @Service
 public class EmpleadoService {
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     private final EmpleadoRepository empleadoRepository;
     private final PersonaRepository personaRepository;
@@ -148,4 +153,20 @@ public class EmpleadoService {
 
         return dto;
     }
+
+    @Transactional
+    public void cambiarContrasena(Integer id, String nuevaContrasena) {
+
+        if (nuevaContrasena == null || nuevaContrasena.isBlank()) {
+            throw new RuntimeException("La nueva contraseña no puede estar vacía");
+        }
+
+        Empleado empleado = empleadoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Empleado no encontrado"));
+
+        empleado.setContrasena(passwordEncoder.encode(nuevaContrasena));
+        empleadoRepository.save(empleado);
+    }
+
+    
 }

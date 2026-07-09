@@ -7,16 +7,18 @@ public class LoginResponse {
     private Long expiraEnMs;
     private String usuarioSistema;
     private String rol;
+    private String cargo;
 
     public LoginResponse() {
     }
 
-    public LoginResponse(String token, String tipo, Long expiraEnMs, String usuarioSistema, String rol) {
+    public LoginResponse(String token, String tipo, Long expiraEnMs, String usuarioSistema, String rol, String cargo) {
         this.token = token;
         this.tipo = tipo;
         this.expiraEnMs = expiraEnMs;
         this.usuarioSistema = usuarioSistema;
         this.rol = rol;
+        this.cargo = cargo;
     }
 
     public String getToken() {
@@ -37,5 +39,9 @@ public class LoginResponse {
 
     public String getRol() {
         return rol;
+    }
+
+    public String getCargo() {
+        return cargo;
     }
 }

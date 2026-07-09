@@ -1,8 +1,11 @@
 package edu.bodega.yessy.back_sol.controllers;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,7 +52,14 @@ public class DocEntradaController {
     }
 
     @DeleteMapping("/{id}")
-    public void eliminarDocEntrada(@PathVariable Integer id) {
-        docEntradaService.eliminar(id);
+    public ResponseEntity<?> eliminarDocEntrada(@PathVariable Integer id) {
+        try {
+            docEntradaService.eliminar(id);
+            return ResponseEntity.noContent().build();
+        } catch (RuntimeException e) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(Map.of("mensaje", e.getMessage()));
+        }
     }
 }
