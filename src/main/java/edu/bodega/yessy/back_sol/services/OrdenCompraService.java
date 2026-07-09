@@ -119,7 +119,7 @@ public class OrdenCompraService {
         MetodoPago metodo = metodoDePagoRepository.findById(dto.getIdMetodoPago())
                 .orElseThrow(() -> new RuntimeException("Método de pago no encontrado"));
 
-        EstadoOrdenCompra estado = estadoOrdenCompraService.buscarPorNombre("Borrador");
+        EstadoOrdenCompra estado = estadoOrdenCompraService.buscarPorNombre("");
 
         // Calcular totales
         BigDecimal subtotal = BigDecimal.ZERO;
@@ -195,7 +195,9 @@ public class OrdenCompraService {
     // ================= HELPERS PRIVADOS =================
     private String generarNumeroOrden() {
         String anio = String.valueOf(LocalDate.now().getYear());
-        long correlativo = ordenCompraRepository.count() + 1;
+        long correlativo = (ordenCompraRepository.findMaxId() !=null
+        ? ordenCompraRepository.findMaxId()
+        : 0L) + 1;
         return "OC-" + anio + "-" + String.format("%04d", correlativo);
     }
 
@@ -215,10 +217,14 @@ public class OrdenCompraService {
         detalle.setPrecioUnitario(dto.getPrecioUnitario());
         detalle.setSubTotal(subTotal);
         detalle.setFechaVencimientoEsperada(dto.getFechaVencimientoEsperada());
-        detalle.setLoteEsperado(dto.getLoteEsperado());
+        detalle.setLoteEsperado(generarLoteEsperado(orden.getNumeroOrden()));
         detalle.setObservaciones(dto.getObservaciones());
 
         return detalle;
+    }
+
+    private String generarLoteEsperado(String numeroOrden) {
+    return numeroOrden.replace("OC-","LOT-");
     }
 
     // ================= MAPPER =================
