@@ -49,7 +49,7 @@ public class DetalleSalidaService {
 
         // 🔥 VALIDACIÓN DE STOCK
         if (producto.getStockActual() < dto.getCantidad()) {
-            throw new RuntimeException("Stock insuficiente para realizar la salida");
+            throw new RuntimeException("Stock insuficiente para realizar la salida. Stock disponible: " + producto.getStockActual());
         }
 
         // 🔥 DESCONTAR STOCK
