@@ -3,7 +3,6 @@ package edu.bodega.yessy.back_sol.controllers;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,7 +19,6 @@ import edu.bodega.yessy.back_sol.services.EmpleadoService;
 
 @RestController
 @RequestMapping("/api/empleados")
-@CrossOrigin(origins = "*")
 public class EmpleadoController {
 
     private final EmpleadoService empleadoService;

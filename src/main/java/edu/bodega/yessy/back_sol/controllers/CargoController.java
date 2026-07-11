@@ -3,7 +3,6 @@ package edu.bodega.yessy.back_sol.controllers;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +16,6 @@ import edu.bodega.yessy.back_sol.dto.cargo.CargoRequestDTO;
 import edu.bodega.yessy.back_sol.dto.cargo.CargoResponseDTO;
 import edu.bodega.yessy.back_sol.services.CargoService;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/cargos")
 public class CargoController {
