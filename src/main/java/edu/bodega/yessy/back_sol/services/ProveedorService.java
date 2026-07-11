@@ -3,7 +3,9 @@ package edu.bodega.yessy.back_sol.services;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import edu.bodega.yessy.back_sol.dto.proveedor.ProveedorRequestDTO;
 import edu.bodega.yessy.back_sol.dto.proveedor.ProveedorResponseDTO;
@@ -32,9 +34,13 @@ public class ProveedorService {
     }
 
     public ProveedorResponseDTO nuevo(ProveedorRequestDTO dto) {
+        if (proveedorRepository.existsByRuc(dto.getRuc())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El RUC ya está registrado");
+        }
+
         Persona persona = obtenerPersonaCentinela();
         Proveedor proveedor = new Proveedor();
-        
+
         proveedor.setPersona(persona);
         proveedor.setRUC(dto.getRuc());
         proveedor.setDescripcion(dto.getDescripcion());
@@ -76,7 +82,11 @@ public class ProveedorService {
                 .findById(id)
                 .orElseThrow(() -> new RuntimeException("Proveedor no encontrado"));
 
-        // No tocamos persona — siempre queda la centinela que ya tiene asignada
+        boolean rucCambio = !proveedor.getRUC().equals(dto.getRuc());
+        if (rucCambio && proveedorRepository.existsByRuc(dto.getRuc())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "El RUC ya está registrado");
+        }
+
         proveedor.setRUC(dto.getRuc());
         proveedor.setDescripcion(dto.getDescripcion());
         proveedor.setCodigoUbigeo(dto.getCodigoUbigeo() != null ? dto.getCodigoUbigeo() : "");
@@ -121,23 +131,23 @@ public class ProveedorService {
         dto.setApellido(proveedor.getPersona().getApellido());
         dto.setRuc(proveedor.getRUC());
         dto.setDescripcion(proveedor.getDescripcion());
-        dto.setCodigoUbigeo(proveedor.getCodigoUbigeo()); 
+        dto.setCodigoUbigeo(proveedor.getCodigoUbigeo());
         dto.setDireccion(proveedor.getDireccion());
         dto.setDepartamento(proveedor.getDepartamento());
         dto.setCiudad(proveedor.getCiudad());
         dto.setDistrito(proveedor.getDistrito());
         dto.setCodigoPostal(proveedor.getCodigoPostal());
-        dto.setReferenciaUbicacion(proveedor.getReferenciaUbicacion()); 
+        dto.setReferenciaUbicacion(proveedor.getReferenciaUbicacion());
         dto.setCorreoEmpresa(proveedor.getCorreoEmpresa());
         dto.setTelefonoEmpresa(proveedor.getTelefonoEmpresa());
-        dto.setTelefonoFijoEmpresa(proveedor.getTelefonoFijoEmpresa()); 
+        dto.setTelefonoFijoEmpresa(proveedor.getTelefonoFijoEmpresa());
         dto.setPaginaWeb(proveedor.getPaginaWeb());
         dto.setNombreSectorista(proveedor.getNombreSectorista());
         dto.setCorreoSectorista(proveedor.getCorreoSectorista());
         dto.setCelularSectorista(proveedor.getCelularSectorista());
-        dto.setTelefonoFijoSectorista(proveedor.getTelefonoFijoSectorista()); 
+        dto.setTelefonoFijoSectorista(proveedor.getTelefonoFijoSectorista());
         dto.setEtiquetas(proveedor.getEtiquetas());
-        dto.setIncidencias(proveedor.getIncidencias()); 
+        dto.setIncidencias(proveedor.getIncidencias());
         dto.setCondicionesPago(proveedor.getCondicionesPago());
         dto.setCalificacion(proveedor.getCalificacion());
         dto.setFechaRegistro(proveedor.getFechaRegistro());

@@ -7,5 +7,5 @@ import edu.bodega.yessy.back_sol.models.Proveedor;
 
 @Repository
 public interface ProveedorRepository extends JpaRepository<Proveedor, Integer> {
-
+    boolean existsByRuc(String ruc);
 }
