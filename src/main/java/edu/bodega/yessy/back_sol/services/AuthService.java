@@ -87,10 +87,17 @@ public class AuthService {
     public RegisterResponse registrar(RegisterRequest request) {
 
         if (empleadoRepository.existsByUsuarioSistema(request.getUsuarioSistema())) {
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST,
-                    "El usuario ya existe"
-            );
+        throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "El usuario ya existe"
+                );
+        }
+
+        if (personaRepository.existsByDni(request.getDni())) {
+                throw new ResponseStatusException(
+                HttpStatus.BAD_REQUEST,
+                "El DNI ya está registrado"
+                );
         }
 
         Persona persona = new Persona();
@@ -131,4 +138,6 @@ public class AuthService {
                 empleado.getRol()
         );
     }
+
+    
 }

@@ -3,7 +3,10 @@ package edu.bodega.yessy.back_sol.controllers;
 import java.util.Map;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import edu.bodega.yessy.back_sol.dto.auth.LoginRequest;
 import edu.bodega.yessy.back_sol.dto.auth.LoginResponse;
@@ -13,7 +16,6 @@ import edu.bodega.yessy.back_sol.services.AuthService;
 
 @RestController
 @RequestMapping("/auth")
-@CrossOrigin(origins = "http://localhost:4200")
 public class AuthController {
 
     private final AuthService authService;

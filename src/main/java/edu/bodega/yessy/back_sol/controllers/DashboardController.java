@@ -3,7 +3,6 @@ package edu.bodega.yessy.back_sol.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,12 +12,13 @@ import edu.bodega.yessy.back_sol.dto.dashboard.GananciaMesDTO;
 import edu.bodega.yessy.back_sol.dto.dashboard.ProductoMasVendidoDTO;
 import edu.bodega.yessy.back_sol.dto.dashboard.ProductoSinMovimientoDTO;
 import edu.bodega.yessy.back_sol.dto.dashboard.ProductoStockBajoDTO;
+import edu.bodega.yessy.back_sol.dto.dashboard.ProductoVencimientoDTO;
 import edu.bodega.yessy.back_sol.dto.dashboard.ResumenDashboardDTO;
 import edu.bodega.yessy.back_sol.dto.dashboard.TendenciaProductoDTO;
+import edu.bodega.yessy.back_sol.dto.dashboard.ValorEnRiesgoDTO;
 import edu.bodega.yessy.back_sol.dto.dashboard.VentaMesDTO;
 import edu.bodega.yessy.back_sol.services.DashboardService;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/dashboard")
 public class DashboardController {
@@ -61,5 +61,15 @@ public class DashboardController {
     @GetMapping("/stock-bajo")
     public List<ProductoStockBajoDTO> stockBajo() {
         return dashboardService.productosStockBajo();
+    }
+
+    @GetMapping("/vencimientos")
+    public List<ProductoVencimientoDTO> vencimientos() {
+        return dashboardService.vencimientos();
+    }
+
+    @GetMapping("/valor-en-riesgo")
+    public ValorEnRiesgoDTO valorEnRiesgo() {
+        return dashboardService.valorEnRiesgo();
     }
 }

@@ -1,11 +1,15 @@
 package edu.bodega.yessy.back_sol.security;
 
 import java.util.Date;
+
 import javax.crypto.SecretKey;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import edu.bodega.yessy.back_sol.models.Empleado;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -33,6 +37,27 @@ public class JwtService {
                 .expiration(fechaExpiracion)
                 .signWith(getSigningKey(), Jwts.SIG.HS256)
                 .compact();
+    }
+
+    public boolean validarToken(String token) {
+    try {
+        extraerClaims(token);
+        return true;
+    } catch (JwtException | IllegalArgumentException e) {
+        return false;
+        }
+    }
+
+    public String extraerUsuario(String token) {
+        return extraerClaims(token).getSubject();
+    }
+
+    public Claims extraerClaims(String token) {
+        return Jwts.parser()
+                .verifyWith(getSigningKey())
+                .build()
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     private SecretKey getSigningKey() {

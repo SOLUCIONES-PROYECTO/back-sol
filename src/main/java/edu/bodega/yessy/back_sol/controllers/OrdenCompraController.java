@@ -3,7 +3,6 @@ package edu.bodega.yessy.back_sol.controllers;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -17,7 +16,6 @@ import edu.bodega.yessy.back_sol.dto.ordencompra.OrdenCompraRequest;
 import edu.bodega.yessy.back_sol.dto.ordencompra.OrdenCompraResponse;
 import edu.bodega.yessy.back_sol.services.OrdenCompraService;
 
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping("/ordenescompra")
 public class OrdenCompraController {
@@ -25,43 +23,36 @@ public class OrdenCompraController {
     @Autowired
     private OrdenCompraService ordenCompraService;
 
-    // ================= LISTAR =================
     @GetMapping
     public ArrayList<OrdenCompraResponse> listar() {
         return ordenCompraService.listar();
     }
 
-    // ================= BUSCAR =================
     @GetMapping("/{id}")
     public OrdenCompraResponse buscar(@PathVariable Integer id) {
         return ordenCompraService.buscar(id);
     }
 
-    // ================= LISTAR POR EMPLEADO =================
     @GetMapping("/empleado/{idEmpleado}")
     public ArrayList<OrdenCompraResponse> listarPorEmpleado(@PathVariable Integer idEmpleado) {
         return ordenCompraService.listarPorEmpleado(idEmpleado);
     }
 
-    // ================= LISTAR POR PROVEEDOR =================
     @GetMapping("/proveedor/{idProveedor}")
     public ArrayList<OrdenCompraResponse> listarPorProveedor(@PathVariable Integer idProveedor) {
         return ordenCompraService.listarPorProveedor(idProveedor);
     }
 
-    // ================= LISTAR POR ESTADO =================
     @GetMapping("/estado/{idEstado}")
     public ArrayList<OrdenCompraResponse> listarPorEstado(@PathVariable Integer idEstado) {
         return ordenCompraService.listarPorEstado(idEstado);
     }
 
-    // ================= CREAR =================
     @PostMapping
     public OrdenCompraResponse crear(@RequestBody OrdenCompraRequest dto) {
         return ordenCompraService.nuevo(dto);
     }
 
-    // ================= CAMBIAR ESTADO =================
     @PatchMapping("/{id}/estado/{idNuevoEstado}")
     public OrdenCompraResponse cambiarEstado(
             @PathVariable Integer id,
@@ -69,7 +60,6 @@ public class OrdenCompraController {
         return ordenCompraService.cambiarEstado(id, idNuevoEstado);
     }
 
-    // ================= ANULAR =================
     @DeleteMapping("/{id}/anular")
     public void anular(@PathVariable Integer id) {
         ordenCompraService.anular(id);

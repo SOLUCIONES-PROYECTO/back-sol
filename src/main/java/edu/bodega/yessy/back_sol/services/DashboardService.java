@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.YearMonth;
 import java.time.format.TextStyle;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -19,8 +20,10 @@ import edu.bodega.yessy.back_sol.dto.dashboard.GananciaMesDTO;
 import edu.bodega.yessy.back_sol.dto.dashboard.ProductoMasVendidoDTO;
 import edu.bodega.yessy.back_sol.dto.dashboard.ProductoSinMovimientoDTO;
 import edu.bodega.yessy.back_sol.dto.dashboard.ProductoStockBajoDTO;
+import edu.bodega.yessy.back_sol.dto.dashboard.ProductoVencimientoDTO;
 import edu.bodega.yessy.back_sol.dto.dashboard.ResumenDashboardDTO;
 import edu.bodega.yessy.back_sol.dto.dashboard.TendenciaProductoDTO;
+import edu.bodega.yessy.back_sol.dto.dashboard.ValorEnRiesgoDTO;
 import edu.bodega.yessy.back_sol.dto.dashboard.VentaMesDTO;
 import edu.bodega.yessy.back_sol.models.DetalleEntrada;
 import edu.bodega.yessy.back_sol.models.DetalleSalida;
@@ -46,7 +49,7 @@ public class DashboardService {
     @Autowired
     private ProductoRepository productoRepository;
 
-    private static final Set<String> TIPOS_VENTA = Set.of("Boleta", "Factura", "Ticket");
+    private static final Set<String> TIPOS_VENTA = Set.of("Venta");
     private static final String TIPO_DEVOLUCION = "Devolucion";
 
     // ================= RESUMEN GENERAL =================
@@ -334,6 +337,130 @@ public class DashboardService {
         }
 
         return mapa;
+    }
+
+    public List<ProductoVencimientoDTO> vencimientos() {
+
+        LocalDate hoy = LocalDate.now();
+        LocalDate limite = hoy.plusDays(30);
+
+        List<ProductoVencimientoDTO> resultado = new ArrayList<>();
+
+        // Para cada producto, tomamos el lote con fecha más próxima (FEFO)
+        Map<Integer, DetalleEntrada> loteMasProximoPorProducto = new java.util.HashMap<>();
+
+        for (DetalleEntrada detalle : detalleEntradaRepository.findAll()) {
+            Integer idProducto = detalle.getProducto().getIdproducto();
+            LocalDate fechaVenc = detalle.getFechavencimiento();
+
+            DetalleEntrada actual = loteMasProximoPorProducto.get(idProducto);
+
+            if (actual == null || fechaVenc.isBefore(actual.getFechavencimiento())) {
+                loteMasProximoPorProducto.put(idProducto, detalle);
+            }
+        }
+
+        for (Map.Entry<Integer, DetalleEntrada> entry : loteMasProximoPorProducto.entrySet()) {
+
+            DetalleEntrada detalle = entry.getValue();
+            LocalDate fechaVenc = detalle.getFechavencimiento();
+
+            // Solo incluir vencidos o que vencen en los próximos 30 días
+            if (fechaVenc.isAfter(limite))
+                continue;
+
+            long diasRestantes = ChronoUnit.DAYS.between(hoy, fechaVenc);
+
+            String urgencia;
+            if (diasRestantes < 0) {
+                urgencia = "VENCIDO";
+            } else if (diasRestantes <= 7) {
+                urgencia = "URGENTE";
+            } else if (diasRestantes <= 15) {
+                urgencia = "PROXIMO";
+            } else {
+                urgencia = "ADVERTENCIA";
+            }
+
+            Producto producto = detalle.getProducto();
+
+            // Solo incluir si tiene stock (si ya está en 0, no hay nada que perder)
+            if (producto.getStockActual() <= 0)
+                continue;
+
+            resultado.add(new ProductoVencimientoDTO(
+                    producto.getIdproducto(),
+                    producto.getNombre(),
+                    producto.getCategoria(),
+                    producto.getStockActual(),
+                    fechaVenc,
+                    diasRestantes,
+                    urgencia));
+        }
+
+        // Ordenar: vencidos primero, luego por días restantes ascendente
+        resultado.sort((a, b) -> {
+            int ordenUrgencia = urgenciaOrden(a.getUrgencia()) - urgenciaOrden(b.getUrgencia());
+            if (ordenUrgencia != 0)
+                return ordenUrgencia;
+            return Long.compare(a.getDiasRestantes(), b.getDiasRestantes());
+        });
+
+        return resultado;
+    }
+
+    private int urgenciaOrden(String urgencia) {
+        return switch (urgencia) {
+            case "VENCIDO" -> 0;
+            case "URGENTE" -> 1;
+            case "PROXIMO" -> 2;
+            case "ADVERTENCIA" -> 3;
+            default -> 4;
+        };
+    }
+
+    // ================= VALOR EN RIESGO =================
+    public ValorEnRiesgoDTO valorEnRiesgo() {
+
+        LocalDate hoy = LocalDate.now();
+
+        BigDecimal valorVencidos = BigDecimal.ZERO;
+        BigDecimal valorUrgente = BigDecimal.ZERO;
+        BigDecimal valorProximo = BigDecimal.ZERO;
+        BigDecimal valorAdvertencia = BigDecimal.ZERO;
+
+        // Reutilizamos el mismo cálculo FEFO de vencimientos()
+        List<ProductoVencimientoDTO> vencimientos = vencimientos();
+
+        for (ProductoVencimientoDTO v : vencimientos) {
+
+            // Obtenemos el precio de compra del producto para calcular el valor real en
+            // riesgo
+            Producto producto = productoRepository.findById(v.getIdProducto())
+                    .orElse(null);
+
+            if (producto == null)
+                continue;
+
+            BigDecimal valorStock = producto.getPrecioCompra()
+                    .multiply(BigDecimal.valueOf(v.getStockActual()));
+
+            switch (v.getUrgencia()) {
+                case "VENCIDO" -> valorVencidos = valorVencidos.add(valorStock);
+                case "URGENTE" -> valorUrgente = valorUrgente.add(valorStock);
+                case "PROXIMO" -> valorProximo = valorProximo.add(valorStock);
+                case "ADVERTENCIA" -> valorAdvertencia = valorAdvertencia.add(valorStock);
+            }
+        }
+
+        BigDecimal total = valorVencidos
+                .add(valorUrgente)
+                .add(valorProximo)
+                .add(valorAdvertencia);
+
+        return new ValorEnRiesgoDTO(
+                valorVencidos, valorUrgente,
+                valorProximo, valorAdvertencia, total);
     }
 
 }

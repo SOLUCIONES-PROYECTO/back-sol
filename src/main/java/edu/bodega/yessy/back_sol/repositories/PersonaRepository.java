@@ -10,4 +10,5 @@ import edu.bodega.yessy.back_sol.models.Persona;
 @Repository
 public interface PersonaRepository extends JpaRepository<Persona, Integer> {
     Optional<Persona> findByDni(String dni);
+    boolean existsByDni(String dni);
 }
