@@ -34,6 +34,4 @@ public class EstadoProducto {
         this.nombre = nombre;
     }
 
-    
-   
 }

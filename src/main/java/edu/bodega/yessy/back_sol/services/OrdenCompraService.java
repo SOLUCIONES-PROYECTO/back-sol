@@ -119,7 +119,7 @@ public class OrdenCompraService {
         MetodoPago metodo = metodoDePagoRepository.findById(dto.getIdMetodoPago())
                 .orElseThrow(() -> new RuntimeException("Método de pago no encontrado"));
 
-        EstadoOrdenCompra estado = estadoOrdenCompraService.buscarPorNombre("Borrador");
+        EstadoOrdenCompra estado = estadoOrdenCompraService.buscarPorNombre("Pendiente");
 
         // Calcular totales
         BigDecimal subtotal = BigDecimal.ZERO;
