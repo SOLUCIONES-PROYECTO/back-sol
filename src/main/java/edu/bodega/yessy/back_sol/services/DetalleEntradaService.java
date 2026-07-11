@@ -59,6 +59,9 @@ public class DetalleEntradaService {
         entity.setFechavencimiento(dto.getFechaVencimiento());
         entity.setPreciounitario(dto.getPrecioUnitario());
 
+        producto.setStockActual(producto.getStockActual() + dto.getCantidad());
+        productoRepository.save(producto);
+
         DetalleEntrada guardado = detalleEntradaRepository.save(entity);
 
         return convertirDTO(guardado);
